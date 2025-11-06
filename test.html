@@ -1,0 +1,27 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Teste front → Cloud Run</title>
+<button id="go">Testar checkout</button>
+<pre id="out"></pre>
+<script>
+  // TROQUE pela sua URL do Cloud Run:
+  const CLOUD_RUN_URL = 'https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session';
+  const UID = 'teste-uid-123';
+
+  document.getElementById('go').onclick = async () => {
+    const out = document.getElementById('out');
+    out.textContent = 'Chamando…';
+    try {
+      const r = await fetch(CLOUD_RUN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: UID })
+      });
+      const data = await r.json().catch(() => ({}));
+      out.textContent = `HTTP ${r.status}\n${JSON.stringify(data, null, 2)}`;
+      if (r.ok && data.url) location.href = data.url; // redireciona ao Stripe
+    } catch (e) {
+      out.textContent = 'Erro: ' + e;
+    }
+  };
+</script>
