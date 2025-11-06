@@ -1,5 +1,14 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Teste front → Cloud Run</title>
+
+<button id="go">Testar checkout</button>
+<pre id="out"></pre>
+
 <script>
+  // URL do seu serviço Cloud Run (rota POST)
   const CLOUD_RUN_URL = 'https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session';
+  // Origin do App Hosting (sem barra no final)
   const ORIGIN = 'https://hokmah-expositor-web--gen-lang-client-0187133986.us-east4.hosted.app';
 
   document.getElementById('go').onclick = async () => {
@@ -17,10 +26,9 @@
       });
       const data = await r.json().catch(() => ({}));
       out.textContent = `HTTP ${r.status}\n${JSON.stringify(data, null, 2)}`;
-      if (r.ok && data.url) location.href = data.url;
+      if (r.ok && data.url) location.href = data.url; // redireciona para o Stripe
     } catch (e) {
       out.textContent = 'Erro: ' + e;
     }
   };
 </script>
-
