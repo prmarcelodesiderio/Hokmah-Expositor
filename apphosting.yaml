@@ -1,0 +1,14 @@
+build:
+  command: ""
+  output:
+    directory: "."
+
+static:
+  include:
+    - "**/*.html"
+    - "**/*.css"
+    - "**/*.js"
+    - "**/*.png"
+    - "**/*.jpg"
+    - "**/*.svg"
+    - "**/*.ico"
