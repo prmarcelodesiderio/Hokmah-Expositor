@@ -20,17 +20,30 @@
   import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "SEU_API_KEY",
-    authDomain: "SEU_AUTH_DOMAIN",
-    projectId: "SEU_PROJECT_ID",
-    storageBucket: "SEU_BUCKET",
-    messagingSenderId: "SEU_SENDER",
-    appId: "SEU_APP_ID"
-  };
+   // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db   = getFirestore(app);
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCkJgMgiz89Ra-GglXXolEf76Bf8j43deU",
+  authDomain: "gen-lang-client-0187133986.firebaseapp.com",
+  projectId: "gen-lang-client-0187133986",
+  storageBucket: "gen-lang-client-0187133986.firebasestorage.app",
+  messagingSenderId: "467345148998",
+  appId: "1:467345148998:web:f220bd5382cccf4cb94e47",
+  measurementId: "G-MLQ617DL87"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
 
   /********** 2) Referências de UI **********/
   const badge     = document.getElementById('badge');
@@ -42,6 +55,87 @@
   // Troque pela SUA URL do Cloud Run (sem barra final):
   const CLOUD_RUN_BASE = "https://create-checkout-session-467345148998.europe-west1.run.app";
 
-  /********** 3) Autenticação simplificada **********/
-  onAuthSt
+<script type="module">
+// ... seu código acima ...
+
+/************ 4) Endpoints do Cloud Run ************/
+const CHECKOUT_URL = `${CLOUD_RUN_BASE}/create-checkout-session`;
+const PORTAL_URL   = `${CLOUD_RUN_BASE}/billing-portal`;
+
+/************ 5) Handlers dos botões ************/
+async function irParaCheckout(uid) {
+  try {
+    const resp = await fetch(CHECKOUT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        uid,                              // seu UID logado
+        priceId: "price_mensal_2490",     // ajuste para o seu price do Stripe
+        success_url: window.location.origin + "/sucesso.html",
+        cancel_url: window.location.origin + "/cancelado.html",
+      })
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${resp.status}`);
+    }
+
+    // O backend pode devolver { url: 'https://checkout.stripe.com/...' }
+    const data = await resp.json();
+    if (data.url) window.location.href = data.url;
+  } catch (e) {
+    alert("Falha ao criar sessão de checkout: " + e.message);
+  }
+}
+
+async function abrirPortal(uid) {
+  try {
+    const resp = await fetch(PORTAL_URL + `?uid=${encodeURIComponent(uid)}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    if (data.url) window.location.href = data.url;
+  } catch (e) {
+    alert("Falha ao abrir portal de cobrança: " + e.message);
+  }
+}
+
+/************ 6) Autenticação + gating ************/
+// supondo que você já tem getAuth e onAuthStateChanged importados
+onAuthStateChanged(auth, async (user) => {
+  const livre = document.getElementById('free');
+  const premium = document.getElementById('premium');
+  const btnAssinar = document.getElementById('assinar');
+  const btnGerenciar = document.getElementById('gerenciar');
+
+  if (!user) {
+    // visitante: mostra Free, esconde Premium + botão Gerenciar
+    livre.style.display = '';
+    premium.style.display = 'none';
+    btnGerenciar.style.display = 'none';
+    btnAssinar.style.display = '';
+    return;
+  }
+
+  // Carrega o doc do usuário no Firestore para saber plano/status
+  const ref = doc(db, "users", user.uid);
+  onSnapshot(ref, (snap) => {
+    const u = snap.data() || {};
+    const ativo = u.status_assinatura === "ativo" || u.subscriptionStatus === "active";
+    const ehPremium = ativo || u.plan === "premium" || u.plan === "pro";
+
+    // gating
+    livre.style.display = '';
+    premium.style.display = ehPremium ? '' : 'none';
+
+    // botões
+    btnAssinar.style.display = ehPremium ? 'none' : '';
+    btnGerenciar.style.display = ehPremium ? '' : 'none';
+
+    // ações dos botões
+    btnAssinar.onclick = () => irParaCheckout(user.uid);
+    btnGerenciar.onclick = () => abrirPortal(user.uid);
+  });
+});
+
 
