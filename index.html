@@ -42,6 +42,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 const db   = getFirestore(app);
 
 
@@ -70,7 +71,7 @@ async function irParaCheckout(uid) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         uid,                              // seu UID logado
-        priceId: "price_mensal_2490",     // ajuste para o seu price do Stripe
+        priceId: price_1SOTjHA0f0MY0usftoft1YRd,     // ajuste para o seu price do Stripe
         success_url: window.location.origin + "/sucesso.html",
         cancel_url: window.location.origin + "/cancelado.html",
       })
@@ -100,42 +101,51 @@ async function abrirPortal(uid) {
   }
 }
 
-/************ 6) Autenticação + gating ************/
-// supondo que você já tem getAuth e onAuthStateChanged importados
-onAuthStateChanged(auth, async (user) => {
-  const livre = document.getElementById('free');
-  const premium = document.getElementById('premium');
-  const btnAssinar = document.getElementById('assinar');
-  const btnGerenciar = document.getElementById('gerenciar');
+/************ 6) Autenticação + gating (com login no clique) ************/
+const livre        = document.getElementById('free');
+const premium      = document.getElementById('premium');
+const btnAssinar   = document.getElementById('assinar');
+const btnGerenciar = document.getElementById('gerenciar');
+const badge        = document.getElementById('badge'); // se existir
 
+// Handlers SEMPRE ligados
+btnAssinar.onclick = async () => {
+  if (!auth.currentUser) {
+    try { await signInWithPopup(auth, provider); } catch(e){ return alert('Login cancelado.'); }
+  }
+  await irParaCheckout(auth.currentUser.uid);
+};
+
+btnGerenciar.onclick = async () => {
+  if (!auth.currentUser) {
+    try { await signInWithPopup(auth, provider); } catch(e){ return alert('Login cancelado.'); }
+  }
+  await abrirPortal(auth.currentUser.uid);
+};
+
+onAuthStateChanged(auth, (user) => {
+  // Visitante
   if (!user) {
-    // visitante: mostra Free, esconde Premium + botão Gerenciar
-    livre.style.display = '';
-    premium.style.display = 'none';
+    if (badge) badge.textContent = 'Plano: Free';
+    livre.style.display        = '';
+    premium.style.display      = 'none';
     btnGerenciar.style.display = 'none';
-    btnAssinar.style.display = '';
     return;
   }
 
-  // Carrega o doc do usuário no Firestore para saber plano/status
+  // Logado: acompanhar plano no Firestore
   const ref = doc(db, "users", user.uid);
   onSnapshot(ref, (snap) => {
     const u = snap.data() || {};
-    const ativo = u.status_assinatura === "ativo" || u.subscriptionStatus === "active";
-    const ehPremium = ativo || u.plan === "premium" || u.plan === "pro";
+    const ativo     = u.status_assinatura === 'ativo' || u.subscriptionStatus === 'active';
+    const ehPremium = ativo || u.plan === 'premium' || u.plan === 'pro';
 
-    // gating
-    livre.style.display = '';
-    premium.style.display = ehPremium ? '' : 'none';
-
-    // botões
-    btnAssinar.style.display = ehPremium ? 'none' : '';
+    if (badge) badge.textContent = ehPremium ? 'Plano: Premium' : 'Plano: Free';
+    livre.style.display        = '';
+    premium.style.display      = ehPremium ? '' : 'none';
     btnGerenciar.style.display = ehPremium ? '' : 'none';
-
-    // ações dos botões
-    btnAssinar.onclick = () => irParaCheckout(user.uid);
-    btnGerenciar.onclick = () => abrirPortal(user.uid);
   });
 });
+
 
 
