@@ -1,9 +1,47 @@
-<!doctype html>
-<html lang="pt-BR">
-<head><meta charset="utf-8"><title>Hokmah Expositor</title></head>
-<body>
-  <h1>Hokmah Expositor – online ✅</h1>
-  <p>Homepage de teste do App Hosting.</p>
-  <p><a href="/sucesso.html">Ir para sucesso</a> • <a href="/cancelado.html">Ir para cancelado</a></p>
-</body>
-</html>
+<header style="display:flex; gap:10px; align-items:center;">
+  <strong>Hokmah Expositor</strong>
+  <span id="badge" style="margin-left:auto; padding:2px 8px; border:1px solid #999; border-radius:6px;">Plano: Free</span>
+  <button id="assinar">Assinar Premium</button>
+  <button id="gerenciar" style="display:none">Gerenciar assinatura</button>
+</header>
+
+<hr/>
+
+<section id="free">Conteúdo grátis visível para todos.</section>
+<section id="premium" style="display:none">
+  <h3>🎉 Conteúdo Premium liberado!</h3>
+  <p>Aqui ficam as funções/recursos para assinantes.</p>
+</section>
+
+<script type="module">
+  /********** 1) Firebase SDK (preencha seu config) **********/
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+  import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "SEU_API_KEY",
+    authDomain: "SEU_AUTH_DOMAIN",
+    projectId: "SEU_PROJECT_ID",
+    storageBucket: "SEU_BUCKET",
+    messagingSenderId: "SEU_SENDER",
+    appId: "SEU_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  /********** 2) Referências de UI **********/
+  const badge     = document.getElementById('badge');
+  const freeBox   = document.getElementById('free');
+  const premiumBox= document.getElementById('premium');
+  const btnAssinar= document.getElementById('assinar');
+  const btnGer    = document.getElementById('gerenciar');
+
+  // Troque pela SUA URL do Cloud Run (sem barra final):
+  const CLOUD_RUN_BASE = "https://create-checkout-session-467345148998.europe-west1.run.app";
+
+  /********** 3) Autenticação simplificada **********/
+  onAuthSt
+
