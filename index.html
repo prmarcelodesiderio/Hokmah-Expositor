@@ -65,6 +65,38 @@ const PORTAL_URL   = `${CLOUD_RUN_BASE}/billing-portal`;
 
 /************ 5) Handlers dos botões ************/
 async function irParaCheckout(uid) {
+   console.log('[APP] irParaCheckout()', { uid, CHECKOUT_URL });
+
+  try {
+    const resp = await fetch(CHECKOUT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        uid, // seu UID logado
+        priceId: 'SEU_PRICE_ID_AQUI', // confirme seu price do Stripe
+        success_url: window.location.origin + '/sucesso.html',
+        cancel_url:  window.location.origin + '/cancelado.html',
+      }),
+    });
+
+    const data = await resp.json().catch(() => ({}));
+    console.log('[APP] resposta checkout:', resp.status, data);
+
+    if (!resp.ok) {
+      throw new Error((data?.error || `HTTP ${resp.status}`));
+    }
+
+    if (data?.url) {
+      window.location.href = data.url; // redireciona para o Stripe
+    } else {
+      alert('Resposta inválida do backend (sem url).');
+    }
+  } catch (e) {
+    console.error(e);
+    alert('Falha ao criar sessão de checkout: ' + e.message);
+  }
+}
+
   try {
     const resp = await fetch(CHECKOUT_URL, {
       method: 'POST',
@@ -77,6 +109,29 @@ async function irParaCheckout(uid) {
       })
     });
 
+ // Pega o botão (confirme que no HTML ele é id="assinar")
+const btnAssinar = document.getElementById('assinar');
+
+// Handler de clique SEMPRE ligado
+btnAssinar.onclick = async () => {
+  console.log('[APP] CLICK ASSINAR');
+
+  try {
+    // se não estiver logado, abre login com Google
+    if (!auth.currentUser) {
+      console.log('[APP] iniciando login popup…');
+      await signInWithPopup(auth, provider);
+      console.log('[APP] login ok:', auth.currentUser?.uid);
+    }
+
+    // chama o fluxo de checkout
+    await irParaCheckout(auth.currentUser.uid);
+  } catch (e) {
+    console.error(e);
+    alert('Erro no fluxo de assinatura: ' + e.message);
+  }
+};
+   
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({}));
       throw new Error(err.error || `HTTP ${resp.status}`);
