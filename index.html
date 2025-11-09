@@ -171,14 +171,27 @@ const btnGerenciar = document.getElementById('gerenciar');
 const badge        = document.getElementById('badge'); // se existir
 
 // Handlers SEMPRE ligados
-btnAssinar.onclick = async () => {
-  if (!auth.currentUser) {
-    try { await signInWithPopup(auth, provider); } catch(e){ return alert('Login cancelado.'); }
-  }
-  await irParaCheckout(auth.currentUser.uid);
-};
+btnAssinar.addEventListener('click', async (e) => {
+  // se for <a>, previne navegação vazia
+  e.preventDefault();
+  console.log('[APP] CLICK ASSINAR');
 
-btnGerenciar.onclick = async () => {
+  try {
+    // login se não estiver autenticado
+    if (!auth.currentUser) {
+      console.log('[APP] iniciando login popup...');
+      await signInWithPopup(auth, provider);
+      console.log('[APP] login ok:', auth.currentUser?.uid);
+    }
+
+    // chama o fluxo de checkout
+    await irParaCheckout(auth.currentUser.uid);
+  } catch (e) {
+    console.error(e);
+    alert('Erro no fluxo de assinatura: ' + (e?.message || e));
+  }
+});
+
   if (!auth.currentUser) {
     try { await signInWithPopup(auth, provider); } catch(e){ return alert('Login cancelado.'); }
   }
