@@ -1,7 +1,7 @@
 <header style="display:flex; gap:10px; align-items:center;">
   <strong>Hokmah Expositor</strong>
   <span id="badge" style="margin-left:auto; padding:2px 8px; border:1px solid #999; border-radius:6px;">Plano: Free</span>
-  <a id="assinar" ...>Assinar Premium</a>
+  <a id="assinar" href="#">Assinar Premium</a>
   <button id="gerenciar" style="display:none">Gerenciar assinatura</button>
 </header>
 
@@ -110,7 +110,7 @@ async function irParaCheckout(uid) {
 
 // ===== Aguarda o DOM ficar pronto antes de ligar a UI =====
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[APP] DOM pronto – preparando UI');
+  console.log('[APP] DOM pronto — preparando UI');
 
   // 1) Referência do botão
   const btnAssinar = document.getElementById('assinar');
@@ -120,24 +120,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2) Handler do clique
-  btnAssinar.addEventListener('click', async () => {
+  btnAssinar.addEventListener('click', async (e) => {
+    e.preventDefault();                 // evita navegação do <a href="#">
     console.log('[APP] CLICK ASSINAR');
 
     try {
-    // se não estiver logado, abre login com Google
-    if (!auth.currentUser) {
-      console.log('[APP] iniciando login popup…');
-      await signInWithPopup(auth, provider);
-      console.log('[APP] login ok:', auth.currentUser?.uid);
-    }
+      // se não estiver logado, abre login com Google
+      if (!auth.currentUser) {
+        console.log('[APP] iniciando login popup...');
+        await signInWithPopup(auth, provider);
+        console.log('[APP] login ok:', auth.currentUser?.uid);
+      }
 
-    // chama o fluxo de checkout
-    await irParaCheckout(auth.currentUser.uid);
-  } catch (e) {
-    console.error(e);
-    alert('Erro no fluxo de assinatura: ' + e.message);
-  }
-};
+      // chama o fluxo de checkout
+      await irParaCheckout(auth.currentUser.uid);
+    } catch (e) {
+      console.error(e);
+      alert('Erro no fluxo de assinatura: ' + (e?.message || e));
+    }
+  });
+});
    
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({}));
