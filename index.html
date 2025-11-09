@@ -119,27 +119,42 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // 2) Handler do clique
-  btnAssinar.addEventListener('click', async (e) => {
-    e.preventDefault();                 // evita navegação do <a href="#">
-    console.log('[APP] CLICK ASSINAR');
+   // 2) Handler do clique — PREVINE navegação do <a href="#">
+btnAssinar.addEventListener('click', async (ev) => {
+  ev.preventDefault(); // <— importante!
+  console.log('[APP] CLICK ASSINAR');
 
-    try {
-      // se não estiver logado, abre login com Google
-      if (!auth.currentUser) {
-        console.log('[APP] iniciando login popup...');
-        await signInWithPopup(auth, provider);
-        console.log('[APP] login ok:', auth.currentUser?.uid);
-      }
-
-      // chama o fluxo de checkout
-      await irParaCheckout(auth.currentUser.uid);
-    } catch (e) {
-      console.error(e);
-      alert('Erro no fluxo de assinatura: ' + (e?.message || e));
+  try {
+    // se não estiver logado, abre login com Google
+    if (!auth.currentUser) {
+      console.log('[APP] iniciando login popup...');
+      await signInWithPopup(auth, provider);
+      console.log('[APP] login ok:', auth.currentUser?.uid);
     }
-  });
+    // chama o fluxo de checkout
+    await irParaCheckout(auth.currentUser.uid);
+  } catch (e) {
+    console.error(e);
+    alert('Erro no fluxo de assinatura: ' + (e?.message || e));
+  }
 });
+
+// Handler do botão "Gerenciar"
+btnGerenciar.addEventListener('click', async (ev) => {
+  ev.preventDefault(); // <— importante!
+  console.log('[APP] CLICK GERENCIAR');
+
+  try {
+    if (!auth.currentUser) {
+      try { await signInWithPopup(auth, provider); } catch(e){ return alert('Login cancelado.'); }
+    }
+    await abrirPortal(auth.currentUser.uid);
+  } catch (e) {
+    console.error(e);
+    alert('Falha ao abrir portal de cobrança: ' + (e?.message || e));
+  }
+});
+
    
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({}));
