@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+// JSON no body
 app.use(express.json());
 
 // ---- CORS (usa a variável de ambiente CORS_ORIGIN) ----
@@ -11,14 +12,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', ALLOW_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
-app.options('*', (req, res) => res.sendStatus(204));
 
 // ---- Stripe ----
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// ---- Servir arquivos estáticos (index.html, sucesso.html, cancelar.html) ----
+// ---- Servir arquivos estáticos (index.html, sucesso.html, cancelado.html) ----
 app.use(express.static(__dirname));
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
