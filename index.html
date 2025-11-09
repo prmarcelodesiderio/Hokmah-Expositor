@@ -53,16 +53,12 @@ const db   = getFirestore(app);
   const btnAssinar= document.getElementById('assinar');
   const btnGer    = document.getElementById('gerenciar');
 
- <script type="module">
-// ... seu código acima ...
-
-//************ 4) Endpoints do Cloud Run ************/
+ //************ 4) Endpoints do Cloud Run ************/
 const CLOUD_RUN_BASE = 'https://create-checkout-session-467345148998.europe-west1.run.app'; // sua URL base (sem barra no final)
 const CHECKOUT_URL   = `${CLOUD_RUN_BASE}/create-checkout-session`;
 const PORTAL_URL     = `${CLOUD_RUN_BASE}/billing-portal`;
 
-
-/************ 5) Handlers dos botões ************/
+//************ 5) Handlers dos botões ************/
 async function irParaCheckout(uid) {
    console.log('[APP] irParaCheckout()', { uid, CHECKOUT_URL });
 
