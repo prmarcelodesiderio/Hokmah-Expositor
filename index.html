@@ -29,16 +29,16 @@
   <div id="free">Seção Free</div>
   <div id="premium" style="display:none;">Seção Premium</div>
 
-  <!-- TODO: coloque sucesso.html e cancelado.html na raiz (já existem no seu projeto) -->
+  <!-- TODO: sucesso.html e cancelado.html precisam existir na raiz (você já tem) -->
 
   <script type="module">
-    /******************** IMPORTS (Modules) ********************/
+    /******************** IMPORTS ********************/
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
     import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-    /******************** FIREBASE CONFIG (o seu) ********************/
+    /******************** FIREBASE CONFIG ********************/
     const firebaseConfig = {
       apiKey: "AIzaSyCkJ9Mgiz89Ra-GglXXOleF76Bf843deU",
       authDomain: "gen-lang-client-0187133986.firebaseapp.com",
@@ -57,7 +57,6 @@
     const db = getFirestore(app);
 
     /******************** ENDPOINTS (Cloud Run) ********************/
-    // << CONFIRA ESTA BASE >>
     const CLOUD_RUN_BASE = 'https://create-checkout-session-467345148998.europe-west1.run.app';
     const CHECKOUT_URL   = `${CLOUD_RUN_BASE}/create-checkout-session`;
     const PORTAL_URL     = `${CLOUD_RUN_BASE}/billing-portal`;
@@ -150,11 +149,7 @@
 
     /******************** AUTH + GATING ********************/
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setPlanoUI(false);
-        return;
-      }
-      // acompanha doc do usuário (Firestore) para saber o plano
+      if (!user) { setPlanoUI(false); return; }
       const ref = doc(db, 'users', user.uid);
       onSnapshot(ref, (snap) => {
         const u = snap.data() || {};
