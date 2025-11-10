@@ -48,11 +48,7 @@ const db   = getFirestore(app);
 
   /********** 2) Referências de UI **********/
   const badge     = document.getElementById('badge');
-  const freeBox   = document.getElementById('free');
-  const premiumBox= document.getElementById('premium');
-  const btnAssinar= document.getElementById('assinar');
-  const btnGer    = document.getElementById('gerenciar');
-
+  
  //************ 4) Endpoints do Cloud Run ************/
 const CLOUD_RUN_BASE = 'https://create-checkout-session-467345148998.europe-west1.run.app'; // sua URL base (sem barra no final)
 const CHECKOUT_URL   = `${CLOUD_RUN_BASE}/create-checkout-session`;
@@ -105,34 +101,74 @@ async function irParaCheckout(uid) {
     });
 
 // ===== Aguarda o DOM ficar pronto antes de ligar a UI =====
+// ...
+// (Função irParaCheckout termina na linha 93)
+// ...
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[APP] DOM pronto — preparando UI');
+    console.log('[APP] DOM pronto');
 
-  // 1) Referência do botão
-  const btnAssinar = document.getElementById('assinar');
-  if (!btnAssinar) {
-    console.error('[APP] botão #assinar não encontrado no DOM');
-    return;
-  }
+    // 1) Referência dos botões (aqui é o lugar certo)
+    const btnAssinar = document.getElementById('btnAssinar');
+    const btnGerenciar = document.getElementById('gerenciar'); // Corrija o ID se for 'btnGerenciar'
 
-   // 2) Handler do clique — PREVINE navegação do <a href="#">
-btnAssinar.addEventListener('click', async (ev) => {
-  ev.preventDefault(); // <— importante!
-  console.log('[APP] CLICK ASSINAR');
-
-  try {
-    // se não estiver logado, abre login com Google
-    if (!auth.currentUser) {
-      console.log('[APP] iniciando login popup...');
-      await signInWithPopup(auth, provider);
-      console.log('[APP] login ok:', auth.currentUser?.uid);
+    if (!btnAssinar) {
+        console.error('[APP] Botão "btnAssinar" não encontrado no DOM!');
     }
-    // chama o fluxo de checkout
-    await irParaCheckout(auth.currentUser.uid);
-  } catch (e) {
-    console.error(e);
-    alert('Erro no fluxo de assinatura: ' + (e?.message || e));
-  }
+    if (!btnGerenciar) {
+        console.error('[APP] Botão "btnGerenciar" não encontrado no DOM!');
+    }
+
+    // 2) Handler do clique "Assinar"
+    if (btnAssinar) {
+        btnAssinar.addEventListener('click', async (ev) => {
+            ev.preventDefault(); // <-- Importante!
+            console.log('[APP] Click ASSINAR');
+            
+            try {
+                let user = auth.currentUser;
+                // Se não estiver logado, abre login com Google
+                if (!user) {
+                    await signInWithPopup(auth, provider);
+                    user = auth.currentUser; // Pega o usuário recém-logado
+                    console.log('[APP] Login OK:', user.uid);
+                }
+                
+                // Se o login foi feito ou já estava logado, chama o checkout
+                if (user) {
+                    await irParaCheckout(user.uid);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Erro no fluxo de assinatura: " + e.message);
+            }
+        });
+    }
+
+    // 3) Handler do botão "Gerenciar"
+    if (btnGerenciar) {
+        btnGerenciar.addEventListener('click', async (ev) => {
+            ev.preventDefault(); // <-- Importante!
+            console.log('[APP] Click GERENCIAR');
+            
+            try {
+                let user = auth.currentUser;
+                // Se não estiver logado, abre login com Google
+                if (!user) {
+                    await signInWithPopup(auth, provider);
+                    user = auth.currentUser; // Pega o usuário recém-logado
+                }
+
+                // Se o login foi feito ou já estava logado, abre o portal
+                if (user) {
+                    await abrirPortal(user.uid);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Falha ao abrir portal de cobrança: " + e.message);
+            }
+        });
+    }
 });
 
 // Handler do botão "Gerenciar"
@@ -185,7 +221,6 @@ const badge        = document.getElementById('badge'); // se existir
 
 /*
 // Handlers SEMPRE ligados
-btnAssinar.onclick = async () => {
   if (!auth.currentUser) {
     try { await signInWithPopup(auth, provider); }
     catch(e) { return alert('Login cancelado.'); }
@@ -193,7 +228,6 @@ btnAssinar.onclick = async () => {
   await irParaCheckout(auth.currentUser.uid);
 };
 
-btnGerenciar.onclick = async () => {
   if (!auth.currentUser) {
     try { await signInWithPopup(auth, provider); }
     catch(e) { return alert('Login cancelado.'); }
@@ -202,28 +236,44 @@ btnGerenciar.onclick = async () => {
 };
 */
 
+// ...
+// (Função abrirPortal(uid) termina na linha 176)
+// ...
+
 onAuthStateChanged(auth, (user) => {
-  // Visitante
-  if (!user) {
-    if (badge) badge.textContent = 'Plano: Free';
-    livre.style.display        = '';
-    premium.style.display      = 'none';
-    btnGerenciar.style.display = 'none';
-    return;
-  }
+    // 6) Autenticação e gating (agora só atualiza a UI)
+    const livre = document.getElementById('free');
+    const premium = document.getElementById('premium');
+    const btnAssinar = document.getElementById('btnAssinar');
+    const btnGerenciar = document.getElementById('gerenciar');
+    const badge = document.getElementById('badge'); // se existir
 
-  // Logado: acompanhar plano no Firestore
-  const ref = doc(db, "users", user.uid);
-  onSnapshot(ref, (snap) => {
-    const u = snap.data() || {};
-    const ativo     = u.status_assinatura === 'ativo' || u.subscriptionStatus === 'active';
-    const ehPremium = ativo || u.plan === 'premium' || u.plan === 'pro';
+    // Visitante
+    if (!user) {
+        if (badge) badge.textContent = 'Plano: Free';
+        livre.style.display = '';
+        premium.style.display = 'none';
+        btnAssinar.style.display = '';
+        btnGerenciar.style.display = 'none';
+        return;
+    }
 
-    if (badge) badge.textContent = ehPremium ? 'Plano: Premium' : 'Plano: Free';
-    livre.style.display        = '';
-    premium.style.display      = ehPremium ? '' : 'none';
-    btnGerenciar.style.display = ehPremium ? '' : 'none';
-  });
+    // Logado: acompanha plano no Firestore
+    const ref = doc(db, "users", user.uid);
+    onSnapshot(ref, (snap) => {
+        if (!snap.data()) { /* usuário sem doc? */ return; }
+        
+        const u = snap.data().u;
+        const constAtivo = u.status_assinatura === "ativo" || u.subscriptionStatus === "active";
+        const constPremium = ativo || u.plan === 'premium' || u.plan === 'pro';
+
+        if (badge) badge.textContent = constPremium ? 'Plano: Premium' : 'Plano: Free';
+        
+        livre.style.display = constPremium ? 'none' : '';
+        premium.style.display = constPremium ? '' : 'none';
+        btnAssinar.style.display = constPremium ? 'none' : '';
+        btnGerenciar.style.display = constPremium ? '' : 'none';
+    });
 });
 
 
