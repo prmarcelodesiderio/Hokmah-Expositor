@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[APP] DOM pronto');
 
     // 1) Referência dos botões (aqui é o lugar certo)
-    const btnAssinar = document.getElementById('btnAssinar');
+    const btnAssinar = document.getElementById('assinar');
     const btnGerenciar = document.getElementById('gerenciar'); // Corrija o ID se for 'btnGerenciar'
 
     if (!btnAssinar) {
@@ -227,7 +227,7 @@ onAuthStateChanged(auth, (user) => {
     // 6) Autenticação e gating (agora só atualiza a UI)
     const livre = document.getElementById('free');
     const premium = document.getElementById('premium');
-    const btnAssinar = document.getElementById('btnAssinar');
+    const btnAssinar = document.getElementById('assinar');
     const btnGerenciar = document.getElementById('gerenciar');
     const badge = document.getElementById('badge'); // se existir
 
