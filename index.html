@@ -1,266 +1,171 @@
-<header style="display:flex; gap:10px; align-items:center;">
-  <strong>Hokmah Expositor</strong>
-  <span id="badge" style="margin-left:auto; padding:2px 8px; border:1px solid #999; border-radius:6px;">Plano: Free</span>
-  <button id="assinar" type="button">Assinar Premium</button>
-  <button id="gerenciar" style="display:none">Gerenciar assinatura</button>
-</header>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hokmah Expositor</title>
+  <!-- Silenciar 404 do favicon -->
+  <link rel="icon" href="data:,">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; padding: 16px; }
+    .row { display:flex; gap:12px; align-items:center; }
+    .badge { border:1px solid #ccc; padding:6px 12px; border-radius:8px; }
+    .btn { border:1px solid #444; padding:8px 14px; border-radius:8px; cursor:pointer; background:#f6f6f6; }
+    .btn:hover { background:#eee; }
+    .muted { color:#666; }
+  </style>
+</head>
+<body>
+  <h1>Hokmah Expositor</h1>
 
-<hr/>
+  <div class="row" style="margin:12px 0;">
+    <span id="badge" class="badge">Plano: Free</span>
+    <a id="assinar" class="btn">Assinar Premium</a>
+    <a id="gerenciar" class="btn" style="display:none;">Gerenciar Assinatura</a>
+  </div>
 
-<section id="free">Conteúdo grátis visível para todos.</section>
-<section id="premium" style="display:none">
-  <h3>🎉 Conteúdo Premium liberado!</h3>
-  <p>Aqui ficam as funções/recursos para assinantes.</p>
-</section>
+  <p class="muted">Conteúdo grátis visível para todos.</p>
 
-<script type="module">
-  /********** 1) Firebase SDK (preencha seu config) **********/
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-  import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  <div id="free">Seção Free</div>
+  <div id="premium" style="display:none;">Seção Premium</div>
 
-  const firebaseConfig = {
-   // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  <!-- TODO: coloque sucesso.html e cancelado.html na raiz (já existem no seu projeto) -->
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCkJgMgiz89Ra-GglXXolEf76Bf8j43deU",
-  authDomain: "gen-lang-client-0187133986.firebaseapp.com",
-  projectId: "gen-lang-client-0187133986",
-  storageBucket: "gen-lang-client-0187133986.firebasestorage.app",
-  messagingSenderId: "467345148998",
-  appId: "1:467345148998:web:f220bd5382cccf4cb94e47",
-  measurementId: "G-MLQ617DL87"
-};
+  <script type="module">
+    /******************** IMPORTS (Modules) ********************/
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
+    import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-const db   = getFirestore(app);
+    /******************** FIREBASE CONFIG (o seu) ********************/
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkJ9Mgiz89Ra-GglXXOleF76Bf843deU",
+      authDomain: "gen-lang-client-0187133986.firebaseapp.com",
+      projectId: "gen-lang-client-0187133986",
+      storageBucket: "gen-lang-client-0187133986.appspot.com",
+      messagingSenderId: "467345148998",
+      appId: "1:467345148998:web:f2209db5382ccc4fcb94e7",
+      measurementId: "G-ML06T7DLB7"
+    };
 
+    /******************** INICIALIZAÇÃO ********************/
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const db = getFirestore(app);
 
-  /********** 2) Referências de UI **********/
-  const badge     = document.getElementById('badge');
-  
- //************ 4) Endpoints do Cloud Run ************/
-const CLOUD_RUN_BASE = 'https://create-checkout-session-467345148998.europe-west1.run.app'; // sua URL base (sem barra no final)
-const CHECKOUT_URL   = `${CLOUD_RUN_BASE}/create-checkout-session`;
-const PORTAL_URL     = `${CLOUD_RUN_BASE}/billing-portal`;
+    /******************** ENDPOINTS (Cloud Run) ********************/
+    // << CONFIRA ESTA BASE >>
+    const CLOUD_RUN_BASE = 'https://create-checkout-session-467345148998.europe-west1.run.app';
+    const CHECKOUT_URL   = `${CLOUD_RUN_BASE}/create-checkout-session`;
+    const PORTAL_URL     = `${CLOUD_RUN_BASE}/billing-portal`;
 
-//************ 5) Handlers dos botões ************/
-async function irParaCheckout(uid) {
-   console.log('[APP] irParaCheckout()', { uid, CHECKOUT_URL });
-
-  try {
-    const resp = await fetch(CHECKOUT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        uid, // seu UID logado
-        priceId: 'price_1SOTjHA0f0MY0usftoft1YRd', // confirme seu price do Stripe
-        success_url: window.location.origin + '/sucesso.html',
-        cancel_url:  window.location.origin + '/cancelado.html',
-      }),
-    });
-
-    const data = await resp.json().catch(() => ({}));
-    console.log('[APP] resposta checkout:', resp.status, data);
-
-    if (!resp.ok) {
-      throw new Error((data?.error || `HTTP ${resp.status}`));
-    }
-
-    if (data?.url) {
-      window.location.href = data.url; // redireciona para o Stripe
-    } else {
-      alert('Resposta inválida do backend (sem url).');
-    }
-  } catch (e) {
-    console.error(e);
-    alert('Falha ao criar sessão de checkout: ' + e.message);
-  }
-}
-
-  try {
-    const resp = await fetch(CHECKOUT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        uid,                              // seu UID logado
-        priceId: price_1SOTjHA0f0MY0usftoft1YRd,     // ajuste para o seu price do Stripe
-        success_url: window.location.origin + "/sucesso.html",
-        cancel_url: window.location.origin + "/cancelado.html",
-      })
-    });
-
-// ===== Aguarda o DOM ficar pronto antes de ligar a UI =====
-// ...
-// (Função irParaCheckout termina na linha 93)
-// ...
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('[APP] DOM pronto');
-
-    // 1) Referência dos botões (aqui é o lugar certo)
-    const btnAssinar = document.getElementById('assinar');
-    const btnGerenciar = document.getElementById('gerenciar'); // Corrija o ID se for 'btnGerenciar'
-
-    if (!btnAssinar) {
-        console.error('[APP] Botão "btnAssinar" não encontrado no DOM!');
-    }
-    if (!btnGerenciar) {
-        console.error('[APP] Botão "btnGerenciar" não encontrado no DOM!');
-    }
-
-    // 2) Handler do clique "Assinar"
-    if (btnAssinar) {
-        btnAssinar.addEventListener('click', async (ev) => {
-            ev.preventDefault(); // <-- Importante!
-            console.log('[APP] Click ASSINAR');
-            
-            try {
-                let user = auth.currentUser;
-                // Se não estiver logado, abre login com Google
-                if (!user) {
-                    await signInWithPopup(auth, provider);
-                    user = auth.currentUser; // Pega o usuário recém-logado
-                    console.log('[APP] Login OK:', user.uid);
-                }
-                
-                // Se o login foi feito ou já estava logado, chama o checkout
-                if (user) {
-                    await irParaCheckout(user.uid);
-                }
-            } catch (e) {
-                console.error(e);
-                alert("Erro no fluxo de assinatura: " + e.message);
-            }
-        });
-    }
-
-    // 3) Handler do botão "Gerenciar"
-    if (btnGerenciar) {
-        btnGerenciar.addEventListener('click', async (ev) => {
-            ev.preventDefault(); // <-- Importante!
-            console.log('[APP] Click GERENCIAR');
-            
-            try {
-                let user = auth.currentUser;
-                // Se não estiver logado, abre login com Google
-                if (!user) {
-                    await signInWithPopup(auth, provider);
-                    user = auth.currentUser; // Pega o usuário recém-logado
-                }
-
-                // Se o login foi feito ou já estava logado, abre o portal
-                if (user) {
-                    await abrirPortal(user.uid);
-                }
-            } catch (e) {
-                console.error(e);
-                alert("Falha ao abrir portal de cobrança: " + e.message);
-            }
-        });
-    }
-});
-
-// Handler do botão "Gerenciar"
-btnGerenciar.addEventListener('click', async (ev) => {
-  ev.preventDefault(); // <— importante!
-  console.log('[APP] CLICK GERENCIAR');
-
-  try {
-    if (!auth.currentUser) {
-      try { await signInWithPopup(auth, provider); } catch(e){ return alert('Login cancelado.'); }
-    }
-    await abrirPortal(auth.currentUser.uid);
-  } catch (e) {
-    console.error(e);
-    alert('Falha ao abrir portal de cobrança: ' + (e?.message || e));
-  }
-});
-
-   
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err.error || `HTTP ${resp.status}`);
-    }
-
-    // O backend pode devolver { url: 'https://checkout.stripe.com/...' }
-    const data = await resp.json();
-    if (data.url) window.location.href = data.url;
-  } catch (e) {
-    alert("Falha ao criar sessão de checkout: " + e.message);
-  }
-}
-
-async function abrirPortal(uid) {
-  try {
-    const resp = await fetch(PORTAL_URL + `?uid=${encodeURIComponent(uid)}`);
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    if (data.url) window.location.href = data.url;
-  } catch (e) {
-    alert("Falha ao abrir portal de cobrança: " + e.message);
-  }
-}
-
-/************ 6) Autenticação + gating (com login no clique) ************/
-const livre        = document.getElementById('free');
-const premium      = document.getElementById('premium');
-const btnAssinar   = document.getElementById('assinar');
-const btnGerenciar = document.getElementById('gerenciar');
-const badge        = document.getElementById('badge'); // se existir
-
-// ...
-// (Função abrirPortal(uid) termina na linha 176)
-// ...
-
-onAuthStateChanged(auth, (user) => {
-    // 6) Autenticação e gating (agora só atualiza a UI)
-    const livre = document.getElementById('free');
-    const premium = document.getElementById('premium');
-    const btnAssinar = document.getElementById('assinar');
+    /******************** UI ********************/
+    const badge        = document.getElementById('badge');
+    const btnAssinar   = document.getElementById('assinar');
     const btnGerenciar = document.getElementById('gerenciar');
-    const badge = document.getElementById('badge'); // se existir
+    const freeSec      = document.getElementById('free');
+    const premiumSec   = document.getElementById('premium');
 
-    // Visitante
-    if (!user) {
-        if (badge) badge.textContent = 'Plano: Free';
-        livre.style.display = '';
-        premium.style.display = 'none';
-        btnAssinar.style.display = '';
-        btnGerenciar.style.display = 'none';
-        return;
+    function setPlanoUI(isPremium){
+      if (badge) badge.textContent = isPremium ? 'Plano: Premium' : 'Plano: Free';
+      freeSec.style.display    = isPremium ? 'none' : '';
+      premiumSec.style.display = isPremium ? '' : 'none';
+      btnAssinar.style.display = isPremium ? 'none' : '';
+      btnGerenciar.style.display = isPremium ? '' : 'none';
     }
 
-    // Logado: acompanha plano no Firestore
-    const ref = doc(db, "users", user.uid);
-    onSnapshot(ref, (snap) => {
-        if (!snap.data()) { /* usuário sem doc? */ return; }
-        
-        const u = snap.data().u;
-        const constAtivo = u.status_assinatura === "ativo" || u.subscriptionStatus === "active";
-        const constPremium = ativo || u.plan === 'premium' || u.plan === 'pro';
+    /******************** FLUXOS ********************/
+    async function irParaCheckout(uid) {
+      console.log('[APP] irParaCheckout', { uid, CHECKOUT_URL });
+      const resp = await fetch(CHECKOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uid,
+          priceId: 'price_1SOTjHA0F0MY0usf0tf1YRd',  // confirme seu Price no Stripe
+          success_url: window.location.origin + '/sucesso.html',
+          cancel_url:  window.location.origin + '/cancelado.html'
+        })
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(()=>({}));
+        throw new Error(err?.error || `HTTP ${resp.status}`);
+      }
+      const data = await resp.json();
+      if (data?.url) window.location.href = data.url;
+      else throw new Error('Resposta inválida do backend (sem url).');
+    }
 
-        if (badge) badge.textContent = constPremium ? 'Plano: Premium' : 'Plano: Free';
-        
-        livre.style.display = constPremium ? 'none' : '';
-        premium.style.display = constPremium ? '' : 'none';
-        btnAssinar.style.display = constPremium ? 'none' : '';
-        btnGerenciar.style.display = constPremium ? '' : 'none';
+    async function abrirPortal(uid) {
+      const resp = await fetch(PORTAL_URL, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ uid, return_url: window.location.origin })
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(()=>({}));
+        throw new Error(err?.error || `HTTP ${resp.status}`);
+      }
+      const data = await resp.json();
+      if (data?.url) window.location.href = data.url;
+      else throw new Error('Resposta inválida do backend (sem url).');
+    }
+
+    /******************** HANDLERS ********************/
+    btnAssinar.addEventListener('click', async (ev) => {
+      ev.preventDefault();
+      console.log('[APP] Click ASSINAR');
+      try {
+        let user = auth.currentUser;
+        if (!user) {
+          await signInWithPopup(auth, provider);
+          user = auth.currentUser;
+          console.log('[APP] Login OK', user?.uid);
+        }
+        if (user) await irParaCheckout(user.uid);
+      } catch (e) {
+        console.error(e);
+        alert('Falha no fluxo de assinatura: ' + e.message);
+      }
     });
-});
 
-</script>
+    btnGerenciar.addEventListener('click', async (ev) => {
+      ev.preventDefault();
+      console.log('[APP] Click GERENCIAR');
+      try {
+        let user = auth.currentUser;
+        if (!user) {
+          try { await signInWithPopup(auth, provider); }
+          catch { return alert('Login cancelado.'); }
+        }
+        await abrirPortal(auth.currentUser.uid);
+      } catch (e) {
+        console.error(e);
+        alert('Falha ao abrir portal de cobrança: ' + (e?.message || e));
+      }
+    });
+
+    /******************** AUTH + GATING ********************/
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setPlanoUI(false);
+        return;
+      }
+      // acompanha doc do usuário (Firestore) para saber o plano
+      const ref = doc(db, 'users', user.uid);
+      onSnapshot(ref, (snap) => {
+        const u = snap.data() || {};
+        const ativo = u.status_assinatura === 'ativo' || u.subscriptionStatus === 'active';
+        const isPremium = ativo || u.plan === 'premium' || u.plan === 'pro';
+        setPlanoUI(!!isPremium);
+      }, (err) => {
+        console.error('[APP] onSnapshot users err', err);
+        setPlanoUI(false);
+      });
+    });
+  </script>
 </body>
 </html>
-
-
