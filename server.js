@@ -1,26 +1,15 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
-
+const express = require('express');
+const path = require('path');
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const port = process.env.PORT || 8080;
 
-const PORT = process.env.PORT || 8080;
+app.get('/health', (_req, res) => res.status(200).send('ok'));
 
-// servir estáticos da pasta /public
-app.use(express.static(path.join(__dirname, "public")));
-
-// rota de saúde
-app.get("/health", (_req, res) => {
-  res.status(200).send("ok");
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// fallback simples
-app.get("*", (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-app.listen(PORT, () => {
-  console.log(`Hokmah Expositor rodando em http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log('Server listening on port', port);
 });
