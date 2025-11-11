@@ -1,23 +1,25 @@
 /******************** IMPORTS (CDN) ********************/
 console.log('[APP] módulo inicializando...');
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-// ❌ NÃO use analytics aqui
+// ⚠️ Não use analytics aqui
 import {
   getAuth, onAuthStateChanged, GoogleAuthProvider,
   signInWithPopup, signInWithRedirect, getRedirectResult
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {
+  getFirestore, doc, onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 /******************** FIREBASE CONFIG ********************/
+// Use os dados do seu projeto (estes estão batendo com seus prints)
 const firebaseConfig = {
-  apiKey: "AIzaSyCkJ9Mgiz89Ra-GglXXOleF76Bf843deU",
+  apiKey: "AIzaSyCkJgMgiz89Ra-GglXXolEf76Bf8j43deU",
   authDomain: "gen-lang-client-0187133986.firebaseapp.com",
   projectId: "gen-lang-client-0187133986",
-  // Se for bucket novo, este formato é o correto; se for antigo, appspot.com também funciona
   storageBucket: "gen-lang-client-0187133986.firebasestorage.app",
   messagingSenderId: "467345148998",
-  appId: "1:467345148998:web:f2209db5382ccc4fcb94e7",
-  measurementId: "G-MLQ671DLB7"
+  appId: "1:467345148998:web:f220bd5382cccf4cb94e47",
+  measurementId: "G-MLQ617DL87"
 };
 
 /******************** INICIALIZAÇÃO ********************/
@@ -27,12 +29,12 @@ const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
 /******************** ENDPOINTS (Cloud Run) ********************/
-// Mantém europe-west1 (é a sua região mostrada no print do Cloud Run)
+// Confirme a região do seu serviço. Pelos prints está em europe-west1.
 const CLOUD_RUN_BASE = 'https://create-checkout-session-467345148998.europe-west1.run.app';
 const CHECKOUT_URL   = `${CLOUD_RUN_BASE}/create-checkout-session`;
 const PORTAL_URL     = `${CLOUD_RUN_BASE}/billing-portal`;
 
-/******************** FUNÇÕES DE REDE ********************/
+/******************** FUNÇÕES AUXILIARES ********************/
 async function irParaCheckout(uid) {
   console.log('[APP] irParaCheckout', { uid, CHECKOUT_URL });
   const resp = await fetch(CHECKOUT_URL, {
@@ -40,39 +42,48 @@ async function irParaCheckout(uid) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       uid,
+      // troque se o seu Price for outro
       priceId: 'price_1SOTjHA0F0MY0usf0tf1YRd',
       success_url: window.location.origin + '/sucesso.html',
       cancel_url:  window.location.origin + '/cancelado.html'
     })
   });
+
   if (!resp.ok) {
     let msg = `HTTP ${resp.status}`;
     try { msg = (await resp.json())?.error || msg; } catch {}
     throw new Error(msg);
   }
   const data = await resp.json();
-  if (data?.url) window.location.href = data.url;
-  else throw new Error('Resposta inválida do backend (sem url).');
+  if (data?.url) {
+    window.location.href = data.url;
+  } else {
+    throw new Error('Resposta inválida do backend (sem url).');
+  }
 }
 
 async function abrirPortal(uid) {
   const resp = await fetch(PORTAL_URL, {
     method: 'POST',
-    headers: { 'Content-Type':'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ uid, return_url: window.location.origin })
   });
+
   if (!resp.ok) {
     let msg = `HTTP ${resp.status}`;
     try { msg = (await resp.json())?.error || msg; } catch {}
     throw new Error(msg);
   }
   const data = await resp.json();
-  if (data?.url) window.location.href = data.url;
-  else throw new Error('Resposta inválida do backend (sem url).');
+  if (data?.url) {
+    window.location.href = data.url;
+  } else {
+    throw new Error('Resposta inválida do backend (sem url).');
+  }
 }
 
-/******************** UI + HANDLERS ********************/
-window.addEventListener('DOMContentLoaded', async () => {
+/******************** DOM + HANDLERS ********************/
+window.addEventListener('DOMContentLoaded', () => {
   console.log('[APP] DOM pronto: registrando handlers');
 
   const badge        = document.getElementById('badge');
@@ -81,15 +92,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   const freeSec      = document.getElementById('free');
   const premiumSec   = document.getElementById('premium');
 
-  function setPlanoUI(isPremium){
-    if (badge)       badge.textContent         = isPremium ? 'Plano: Premium' : 'Plano: Free';
-    if (freeSec)     freeSec.style.display     = isPremium ? 'none' : '';
-    if (premiumSec)  premiumSec.style.display  = isPremium ? '' : 'none';
-    if (btnAssinar)  btnAssinar.style.display  = isPremium ? 'none' : '';
-    if (btnGerenciar)btnGerenciar.style.display= isPremium ? '' : 'none';
+  function setPlanoUI(isPremium) {
+    if (badge) badge.textContent = isPremium ? 'Plano: Premium' : 'Plano: Free';
+    if (freeSec)      freeSec.style.display      = isPremium ? 'none' : '';
+    if (premiumSec)   premiumSec.style.display   = isPremium ? '' : 'none';
+    if (btnAssinar)   btnAssinar.style.display   = isPremium ? 'none' : '';
+    if (btnGerenciar) btnGerenciar.style.display = isPremium ? '' : 'none';
   }
 
-  // Clique em Assinar
+  // Botão Assinar
   if (btnAssinar) {
     btnAssinar.addEventListener('click', async (ev) => {
       ev.preventDefault();
@@ -99,15 +110,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (!user) {
           try { await signInWithPopup(auth, provider); }
           catch (e) {
+            // Fallback se popup bloqueado
             if (e?.code === 'auth/popup-blocked' ||
                 e?.code === 'auth/operation-not-supported-in-this-environment') {
-              await signInWithRedirect(auth, provider);
-              return;
+              return signInWithRedirect(auth, provider);
             }
             throw e;
           }
-          // Se veio de redirect:
-          try { await getRedirectResult(auth); } catch {}
           user = auth.currentUser;
         }
         if (user) await irParaCheckout(user.uid);
@@ -118,7 +127,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Clique em Gerenciar
+  // Botão Gerenciar
   if (btnGerenciar) {
     btnGerenciar.addEventListener('click', async (ev) => {
       ev.preventDefault();
@@ -132,24 +141,24 @@ window.addEventListener('DOMContentLoaded', async () => {
         await abrirPortal(auth.currentUser.uid);
       } catch (e) {
         console.error(e);
-        alert('Falha ao abrir portal de cobrança: ' + (e?.message || e));
+        alert('Falha ao abrir portal: ' + (e?.message || e));
       }
     });
   }
 
-  // Observa plano no Firestore
-  onAuthStateChanged(auth, (user) => {
+  // Observa login e “gating” do premium
+  onAuthStateChanged(auth, async (user) => {
     if (!user) { setPlanoUI(false); return; }
+
+    // trata retorno de redirect (se tiver usado)
+    try { await getRedirectResult(auth); } catch {}
+
     const ref = doc(db, 'users', user.uid);
     onSnapshot(ref, (snap) => {
       const u = snap.data() || {};
       const ativo = u.status_assinatura === 'ativo' || u.subscriptionStatus === 'active';
       const isPremium = ativo || u.plan === 'premium' || u.plan === 'pro';
       setPlanoUI(!!isPremium);
-    }, (err) => {
-      console.error('[APP] onSnapshot users err', err);
-      setPlanoUI(false);
-    });
+    }, () => setPlanoUI(false));
   });
 });
-  
