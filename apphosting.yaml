@@ -1,8 +1,3 @@
-build:
-  command: ""
-  output:
-    directory: "."
-
 static:
   include:
     - "**/*.html"
