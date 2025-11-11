@@ -1,15 +1,8 @@
 build:
-  command: "echo 'Static site, no build required.'"
+  command: "npm run build"
   output:
-    directory: "."
+    directory: "dist"
 
 static:
   include:
-    - "**/*.html"
-    - "**/*.css"
-    - "**/*.js"
-    - "**/*.png"
-    - "**/*.jpg"
-    - "**/*.svg"
-    - "**/*.ico"
- 
+    - "**/*"

@@ -1,0 +1,20 @@
+{
+  "name": "hokmah-expositor",
+  "version": "1.0.0",
+  "description": "Assistente Homilético",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo \"no build step\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
