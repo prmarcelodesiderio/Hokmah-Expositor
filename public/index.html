@@ -5,10 +5,66 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hokmah Expositor — Online</title>
   <style>
-    body { font-family: system-ui, Arial, sans-serif; padding: 2rem; }
-    .card { max-width: 720px; margin: auto; border: 1px solid #ddd; border-radius: 14px; padding: 2rem; }
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    .card {
+      max-width: 720px;
+      margin: auto;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 2rem;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
     h1 { margin-top: 0; }
-    code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .section-title {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .field {
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+    .field input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+    }
+    button#btn-upgrade {
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: #635bff; /* Stripe roxinho */
+      color: #fff;
+    }
+    button#btn-upgrade:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+    #upgrade-status {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: #333;
+    }
   </style>
 </head>
 <body>
@@ -16,6 +72,78 @@
     <h1>Hokmah Expositor</h1>
     <p>Deploy mínimo para destravar o Firebase App Hosting.</p>
     <p>Rotas úteis: <code>/health</code> (200 OK)</p>
+
+    <div class="section-title">Plano Premium — R$ 24,90/mês</div>
+    <p>Use o botão abaixo para fazer o upgrade do plano Free para o plano Premium.</p>
+
+    <div class="field">
+      <label for="upgrade-email">E-mail para a assinatura (mesmo do login):</label>
+      <input
+        id="upgrade-email"
+        type="email"
+        placeholder="seuemail@exemplo.com"
+        autocomplete="email"
+      />
+    </div>
+
+    <button id="btn-upgrade">Quero ser Premium (R$ 24,90/mês)</button>
+    <p id="upgrade-status"></p>
   </div>
+
+  <script>
+    const btn = document.getElementById('btn-upgrade');
+    const statusEl = document.getElementById('upgrade-status');
+    const emailInput = document.getElementById('upgrade-email');
+
+    const API_URL =
+      'https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session';
+
+    async function handleUpgrade() {
+      statusEl.textContent = '';
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        statusEl.textContent = 'Por favor, informe o e-mail para a assinatura.';
+        emailInput.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      statusEl.textContent = 'Gerando link de pagamento...';
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro HTTP ' + response.status);
+        }
+
+        const data = await response.json();
+
+        if (data && data.url) {
+          // Redireciona para o Checkout do Stripe
+          window.location.href = data.url;
+        } else {
+          statusEl.textContent =
+            'Não foi possível obter o link de pagamento. Tente novamente.';
+          console.error('Resposta inesperada da API:', data);
+        }
+      } catch (err) {
+        console.error('Erro ao criar sessão de checkout:', err);
+        statusEl.textContent =
+          'Ocorreu um erro ao criar a sessão de pagamento. Tente novamente em alguns instantes.';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    btn.addEventListener('click', handleUpgrade);
+  </script>
 </body>
 </html>
