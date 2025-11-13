@@ -1,36 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Hokmah Expositor — Plano Free</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .card {
+      max-width: 480px;
+      margin: 4rem auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin: 0.35rem 0;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #0f766e;
+      color: #ffffff;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    #status {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hokmah Expositor — Plano Free</h1>
+
+    <p>Você está usando o plano gratuito.</p>
+    <p>
+      Para liberar o <strong>Plano Premium</strong> (assinatura mensal de R$ 24,90),
+      clique no botão abaixo. Você será redirecionado para o Checkout seguro do Stripe.
+    </p>
+
+    <button id="upgrade-btn" onclick="handleUpgradeClick()">
+      Fazer upgrade para Premium
+    </button>
+    <div id="status"></div>
+  </div>
+
   <script>
-    // URL base do seu backend no Cloud Run (NÃO colocar /create-checkout-session aqui)
+    // URL base do seu backend no Cloud Run (sem /create-checkout-session no final)
     const CLOUD_RUN_URL = "https://create-checkout-session-467345148998.europe-west1.run.app";
 
     async function handleUpgradeClick() {
-      const btn = document.getElementById('upgrade-btn');
-      const statusEl = document.getElementById('status');
+      const btn = document.getElementById("upgrade-btn");
+      const statusEl = document.getElementById("status");
+
       try {
         btn.disabled = true;
-        statusEl.textContent = 'Redirecionando para o Stripe...';
+        statusEl.textContent = "Redirecionando para o Stripe...";
 
-        const resp = await fetch(CLOUD_RUN_URL + '/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const resp = await fetch(CLOUD_RUN_URL + "/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: 'teste.hokmah+cli@gmail.com' // depois trocamos para o e-mail real do usuário logado
+            // depois vamos trocar pelo e-mail real do usuário logado
+            email: "teste.hokmah+cli@gmail.com",
           }),
         });
 
         if (!resp.ok) {
           const txt = await resp.text();
-          throw new Error('Erro HTTP ' + resp.status + ': ' + txt);
+          throw new Error("Erro HTTP " + resp.status + ": " + txt);
         }
 
         const data = await resp.json();
-        if (!data.url) {
-          throw new Error('Resposta sem URL de checkout');
+        if (!data || !data.url) {
+          throw new Error("Resposta inesperada do servidor.");
         }
 
-        window.location.href = data.url; // abre o Stripe Checkout
+        // Vai para o Stripe Checkout
+        window.location.href = data.url;
       } catch (err) {
         console.error(err);
-        statusEl.textContent = 'Erro ao redirecionar: ' + err.message;
+        statusEl.textContent =
+          "Não foi possível iniciar o checkout: " + err.message;
         btn.disabled = false;
       }
     }
