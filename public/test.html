@@ -1,34 +1,57 @@
 <!doctype html>
-<meta charset="utf-8">
-<title>Teste front → Cloud Run</title>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Teste front → Cloud Run</title>
+  </head>
+  <body>
+    <button id="go">Testar checkout</button>
+    <pre id="out"></pre>
 
-<button id="go">Testar checkout</button>
-<pre id="out"></pre>
+    <script>
+      // URL base do seu serviço Cloud Run (SEM /create-checkout-session no fim)
+      const CLOUD_RUN_URL =
+        "https://create-checkout-session-467345148998.europe-west1.run.app";
 
-<script>
-  // URL do seu serviço Cloud Run (rota POST)
-  const CLOUD_RUN_URL = 'https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session';
-  // Origin do App Hosting (sem barra no final)
-  const ORIGIN = 'https://hokmah-expositor-web--gen-lang-client-0187133986.us-east4.hosted.app';
+      // E-mail de teste (igual usamos no index.html)
+      const TEST_EMAIL = "teste.hokmah+cli@gmail.com";
 
-  document.getElementById('go').onclick = async () => {
-    const out = document.getElementById('out');
-    out.textContent = 'Chamando…';
-    try {
-      const r = await fetch(CLOUD_RUN_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          uid: 'eXVZliZpLDRxeDwDmFRAkgutQ392',
-          success_url: ORIGIN + '/sucesso.html',
-          cancel_url:  ORIGIN + '/cancelado.html'
-        })
-      });
-      const data = await r.json().catch(() => ({}));
-      out.textContent = `HTTP ${r.status}\n${JSON.stringify(data, null, 2)}`;
-      if (r.ok && data.url) location.href = data.url; // redireciona para o Stripe
-    } catch (e) {
-      out.textContent = 'Erro: ' + e;
-    }
-  };
-</script>
+      document.getElementById("go").onclick = async () => {
+        const out = document.getElementById("out");
+        out.textContent = "Chamando…";
+
+        try {
+          const r = await fetch(
+            CLOUD_RUN_URL + "/create-checkout-session",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: TEST_EMAIL,
+              }),
+            }
+          );
+
+          const text = await r.text();
+          let data = {};
+          try {
+            data = JSON.parse(text);
+          } catch (_) {
+            // se não for JSON, mostramos o texto cru
+            data = { raw: text };
+          }
+
+          out.textContent =
+            "HTTP " + r.status + "\n" + JSON.stringify(data, null, 2);
+
+          // Se der certo e vier URL, redireciona para o Stripe
+          if (r.ok && data.url) {
+            location.href = data.url;
+          }
+        } catch (e) {
+          out.textContent = "Erro: " + e;
+        }
+      };
+    </script>
+  </body>
+</html>
