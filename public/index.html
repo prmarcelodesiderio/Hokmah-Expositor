@@ -233,57 +233,26 @@
       <pre id="free-result" class="outline-result"></pre>
     </section>
 
+    <!-- 
+      INÍCIO DA ATUALIZAÇÃO:
+      A seção app-premium foi substituída pelo novo código com o iframe.
+    -->
     <section id="app-premium" class="app-section">
       <h2>Laboratório de Sermões – Plano Premium</h2>
       <p>
-        Aqui você tem geração <strong>ilimitada</strong> de esboços e estudos
-        bíblicos, com todos os recursos liberados.
+        Aqui você tem geração <strong>ilimitada</strong> de esboços e estudos bíblicos,
+        usando o motor do Hokmah Expositor integrado ao Gemini.
       </p>
 
-      <form id="premium-form" onsubmit="return false;">
-        <div class="form-group">
-          <label for="premium-title">Título / Tema do sermão</label>
-          <input type="text" id="premium-title" placeholder="Ex.: Cristo, nosso bom Pastor" />
-        </div>
-
-        <div class="form-group">
-          <label for="premium-text">Texto bíblico principal</label>
-          <input type="text" id="premium-text" placeholder="Ex.: João 10:11-18" />
-        </div>
-
-        <div class="form-group">
-          <label for="premium-method">Método de pregação</label>
-          <select id="premium-method">
-            <option value="expositivo">Expositivo</option>
-            <option value="tematico">Temático</option>
-            <option value="biografico">Biográfico</option>
-            <option value="textual">Textual</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="premium-emphasis">Ênfase pastoral</label>
-          <select id="premium-emphasis">
-            <option value="pastoral">Pastoral</option>
-            <option value="doutrinaria">Doutrinária</option>
-            <option value="exortativa">Exortativa</option>
-            <option value="evangelistica">Evangelística</option>
-            <option value="admoestativa">Admoestativa</option>
-            <option value="apologetica">Apologética</option>
-          </select>
-        </div>
-
-        <button
-          type="button"
-          id="premium-submit"
-          onclick="handleGeneratePremium();"
-        >
-          Gerar esboço (Premium – ilimitado)
-        </button>
-      </form>
-
-      <h3>Resultado do esboço (Premium)</h3>
-      <pre id="premium-result" class="outline-result"></pre>
+      <div class="iframe-wrapper" style="margin-top: 1rem;">
+        <iframe
+          src="AIzaSyByoaHUn9RhslxSBGp5LUQUnJW8dwX-ZW4"
+          width="100%"
+          height="900"
+          style="border: none; border-radius: 8px; background: #ffffff;"
+          loading="lazy"
+        ></iframe>
+      </div>
     </section>
     <!-- FIM DA ATUALIZAÇÃO -->
 
