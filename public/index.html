@@ -155,11 +155,7 @@
       /* Este era o #premium-extra, agora é .premium-box */
       .premium-box {
         display: none; /* Oculto por padrão, script controla */
-        margin-top: 1.5rem;
-        padding: 1rem 1.2rem;
-        border-radius: 8px;
-        background: #e8f5e9;
-        border: 1px solid #c8e6c9;
+/* ... existing code ... -->
         color: #1b5e20;
         font-size: 0.95rem;
       }
@@ -313,23 +309,32 @@
       </div>
     </div>
 
+    <!-- 
+      INÍCIO DA ATUALIZAÇÃO DO SCRIPT:
+      O script inteiro foi substituído por este, que mescla
+      a nova lógica de API com a lógica de upgrade anterior.
+    -->
     <script>
-      // URL BASE do Cloud Run
+      // ====== CONFIGURAÇÕES ======
+      const FREE_LIMIT_PER_MONTH = 10; // Limite do plano free
+
+      // URL para o checkout (Stripe) - Lógica antiga mantida
       const CLOUD_RUN_URL =
         "https://create-checkout-session-467345148998.europe-west1.run.app";
-        
-      // ====== CONFIGURAÇÃO DO PLANO (NOVO) ======
-      const FREE_LIMIT_PER_MONTH = 10;
 
-      // --- Funções de Lógica de Plano (Atualizadas) ---
+      // 🔴 TROQUE ESSA URL PELA URL REAL DO SEU BACKEND (Cloud Run / Opal / etc.)
+      const API_URL = 'https://SUA-URL-AQUI/sermon';
+      // Exemplo (não copie isso, é só modelo):
+      // const API_URL = 'https://hokmah-expositor-xyz.a.run.app/api/generate-sermon';
 
-      // Lê o plano salvo no navegador
+      // ====== LEITURA DO PLANO (localStorage) ======
       function getHokmahPlan() {
-        const stored = localStorage.getItem('hokmah_plan'); // Usando a nova chave
+        const stored = localStorage.getItem('hokmah_plan');
         return stored === 'premium' ? 'premium' : 'free';
       }
-      
-      // (NOVA FUNÇÃO HELPER)
+
+      // ====== FUNÇÕES DE APOIO (API E DATA) ======
+
       function getCurrentMonthKey() {
         const now = new Date();
         const year = now.getFullYear();
@@ -337,13 +342,45 @@
         return `${year}-${month}`; // ex: "2025-11"
       }
 
-      // (FUNÇÃO ATUALIZADA)
-      // Limitação para o plano Free (10 por mês)
-      function handleGenerateFree() {
+      async function callOutlineApi(payload) {
+        // Validação da URL placeholder
+        if (API_URL.includes('SUA-URL-AQUI')) {
+            console.warn("API_URL não configurada.");
+            throw new Error("API_URL não configurada. Edite o script para adicionar a URL real do seu backend.");
+        }
+
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error('Erro na API: ' + response.status + ' - ' + errorText);
+        }
+
+        const data = await response.json();
+
+        // Assumindo que o backend devolve { outline: "texto..." }
+        return data.outline || JSON.stringify(data, null, 2);
+      }
+
+      // ====== FREE: 10 ESBOÇOS POR MÊS ======
+
+      async function handleGenerateFree() {
+        const plan = getHokmahPlan();
+        if (plan !== 'free') {
+          alert('Este botão é para o plano Free. Se você é Premium, use o botão do Premium.');
+          return;
+        }
+
         const monthKey = getCurrentMonthKey();
         const storageKey = 'hokmah_free_count_' + monthKey;
 
-        const current = parseInt(localStorage.getItem(storageKey) || '0', 10);
+        let current = parseInt(localStorage.getItem(storageKey) || '0', 10);
 
         if (current >= FREE_LIMIT_PER_MONTH) {
           alert(
@@ -355,27 +392,101 @@
           return;
         }
 
-        // Incrementa o contador deste mês
-        localStorage.setItem(storageKey, String(current + 1));
+        const titleInput = document.getElementById('free-title');
+        const textInput = document.getElementById('free-text');
+        const methodSelect = document.getElementById('free-method');
+        const emphasisSelect = document.getElementById('free-emphasis');
+        const resultEl = document.getElementById('free-result');
+        const button = document.getElementById('free-submit');
 
-        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço de verdade
-        alert(
-          'Esboço Free gerado! (' +
-            (current + 1) +
+        const title = titleInput.value.trim();
+        const text = textInput.value.trim();
+
+        if (!title || !text) {
+          alert('Preencha pelo menos o título/tema e o texto bíblico principal.');
+          return;
+        }
+
+        const payload = {
+          plan: 'free',
+          title,
+          biblicalText: text,
+          method: methodSelect.value,
+          emphasis: emphasisSelect.value
+        };
+
+        button.disabled = true;
+        resultEl.textContent = 'Gerando seu esboço (plano Free)...';
+
+        try {
+          const outline = await callOutlineApi(payload);
+          current = current + 1;
+          localStorage.setItem(storageKey, String(current));
+
+          resultEl.textContent =
+            'Esboço Free ' +
+            current +
             '/' +
             FREE_LIMIT_PER_MONTH +
-            ' neste mês)'
-        );
+            ' neste mês:\n\n' +
+            outline;
+        } catch (err) {
+          console.error(err);
+          resultEl.textContent =
+            'Ocorreu um erro ao gerar o esboço Free.\n' + err.message;
+        } finally {
+          button.disabled = false;
+        }
       }
 
-      // (FUNÇÃO ATUALIZADA)
-      // Premium sem limite
-      function handleGeneratePremium() {
-        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço de verdade
-        alert('Esboço Premium gerado! (ilimitado neste plano)');
+      // ====== PREMIUM: ILIMITADO ======
+
+      async function handleGeneratePremium() {
+        const plan = getHokmahPlan();
+        if (plan !== 'premium') {
+          alert('Este botão é para o plano Premium. Assine para liberar o uso ilimitado.');
+          return;
+        }
+
+        const titleInput = document.getElementById('premium-title');
+        const textInput = document.getElementById('premium-text');
+        const methodSelect = document.getElementById('premium-method');
+        const emphasisSelect = document.getElementById('premium-emphasis');
+        const resultEl = document.getElementById('premium-result');
+        const button = document.getElementById('premium-submit');
+
+        const title = titleInput.value.trim();
+        const text = textInput.value.trim();
+
+        if (!title || !text) {
+          alert('Preencha pelo menos o título/tema e o texto bíblico principal.');
+          return;
+        }
+
+        const payload = {
+          plan: 'premium',
+          title,
+          biblicalText: text,
+          method: methodSelect.value,
+          emphasis: emphasisSelect.value
+        };
+
+        button.disabled = true;
+        resultEl.textContent = 'Gerando seu esboço (plano Premium, ilimitado)...';
+
+        try {
+          const outline = await callOutlineApi(payload);
+          resultEl.textContent = outline;
+        } catch (err) {
+          console.error(err);
+          resultEl.textContent =
+            'Ocorreu um erro ao gerar o esboço Premium.\n' + err.message;
+        } finally {
+          button.disabled = false;
+        }
       }
 
-      // --- Função de Lógica de Upgrade (Antiga, mantida) ---
+      // --- Função de Lógica de Upgrade (Mantida do script anterior) ---
 
       async function handleUpgradeClick() {
         const btn = document.getElementById("upgrade-btn");
@@ -420,9 +531,9 @@
         }
       }
 
-      // --- Lógica de Inicialização (Mesclada, mantida) ---
+      // --- Lógica de Inicialização (Mantida do script anterior) ---
 
-      // Esta função agora atualiza TODA a UI baseada no plano
+      // Esta função atualiza TODA a UI baseada no plano
       function updateUIVisibility(plan) {
          // 1. Obter todos os elementos da UI
         const planLabel = document.getElementById('plan-label');
@@ -435,14 +546,14 @@
         if (plan === 'premium') {
           if (planLabel) planLabel.textContent = 'Plano: Premium';
           if (upgradeBtn) upgradeBtn.style.display = 'none';
-          if (premiumExtraBox) premiumExtraBox.style.display = 'block'; // Lógica antiga mantida
+          if (premiumExtraBox) premiumExtraBox.style.display = 'block';
           if (appPremium) appPremium.style.display = 'block';
           if (appFree) appFree.style.display = 'none';
         } else {
           // é 'free'
           if (planLabel) planLabel.textContent = 'Plano: Free';
           if (upgradeBtn) upgradeBtn.style.display = 'inline-block';
-          if (premiumExtraBox) premiumExtraBox.style.display = 'none'; // Lógica antiga mantida
+          if (premiumExtraBox) premiumExtraBox.style.display = 'none';
           if (appPremium) appPremium.style.display = 'none';
           if (appFree) appFree.style.display = 'block';
         }
@@ -462,5 +573,6 @@
         }
       });
     </script>
+    <!-- FIM DA ATUALIZAÇÃO DO SCRIPT -->
   </body>
 </html>
