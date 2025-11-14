@@ -50,6 +50,46 @@
         margin: 2.5rem auto;
         padding: 0 1rem;
       }
+      
+      .app-section {
+        max-width: 900px;
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      
+      .app-section .hint {
+          font-size: 0.9rem;
+          color: #555;
+          margin-top: 1rem;
+      }
+      
+      .app-section button {
+        border: none;
+        border-radius: 8px;
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: #2e7d32;
+        color: white;
+        transition: background 0.15s ease;
+      }
+      
+      .app-section button:hover {
+        background: #1b5e20;
+      }
+      
+      #app-free button {
+          background: #3949ab;
+      }
+      #app-free button:hover {
+          background: #283593;
+      }
+
 
       .card {
         background: #ffffff;
@@ -112,9 +152,9 @@
         font-weight: 500;
       }
 
-      /* Área só para Premium (por enquanto um texto simples) */
-      #premium-extra {
-        display: none;
+      /* Este era o #premium-extra, agora é .premium-box */
+      .premium-box {
+        display: none; /* Oculto por padrão, script controla */
         margin-top: 1.5rem;
         padding: 1rem 1.2rem;
         border-radius: 8px;
@@ -135,6 +175,37 @@
       </div>
     </header>
 
+    <section id="app-free" class="app-section">
+      <h2>Gerador de Esboços – Plano Free</h2>
+      <p>
+        No plano gratuito você poderá gerar um número limitado de esboços por dia
+        e testar a experiência do Hokmah Expositor.
+      </p>
+
+      <!-- Aqui depois vamos “colar” o app com limitações -->
+      <button type="button" onclick="handleGenerateFree()">
+        Gerar esboço (Free)
+      </button>
+
+      <p class="hint">
+        Para geração <strong>ilimitada</strong> de esboços e estudos, assine o plano Premium.
+      </p>
+    </section>
+
+    <section id="app-premium" class="app-section">
+      <h2>Laboratório de Sermões – Plano Premium</h2>
+      <p>
+        Aqui fica o seu ambiente completo de geração de esboços e estudos bíblicos,
+        com uso ilimitado e todos os recursos avançados.
+      </p>
+
+      <!-- Aqui vamos “colar” o app completo (Gemini/Hokmah) -->
+      <button type="button" onclick="handleGeneratePremium()">
+        Gerar esboço (Premium ilimitado)
+      </button>
+    </section>
+
+
     <div class="page">
       <div class="card">
         <h2>Conteúdo grátis visível para todos.</h2>
@@ -146,37 +217,53 @@
 
         <p id="upgrade-status"></p>
 
-        <div class="premium-box">
-  	  <strong>Você está no plano Premium.</strong><br />
-  	  Agora você tem geração <strong>ilimitada</strong> de esboços e estudos,
-  	  modelos avançados de estrutura, histórico salvo e outros recursos exclusivos.
-	</div>
+        <!-- O ID #premium-extra foi trocado para class="premium-box" -->
+        <div class="premium-box" id="premium-extra-box">
+          <strong>Você está no plano Premium.</strong><br />
+          Agora você tem geração <strong>ilimitada</strong> de esboços e estudos,
+          modelos avançados de estrutura, histórico salvo e outros recursos exclusivos.
+        </div>
 
       </div>
     </div>
 
     <script>
-      // URL BASE do Cloud Run (SEM /create-checkout-session no final)
+      // URL BASE do Cloud Run
       const CLOUD_RUN_URL =
         "https://create-checkout-session-467345148998.europe-west1.run.app";
 
-      // Lê o plano salvo no navegador e ajusta a interface
-      function applyPlanFromStorage() {
-        const plan = localStorage.getItem("hokmah.plan") || "free";
-        const label = document.getElementById("plan-label");
-        const upgradeBtn = document.getElementById("upgrade-btn");
-        const premiumExtra = document.getElementById("premium-extra");
+      // --- Funções de Lógica de Plano (Novas) ---
 
-        if (plan === "premium") {
-          label.textContent = "Plano: Premium";
-          if (upgradeBtn) upgradeBtn.style.display = "none";
-          if (premiumExtra) premiumExtra.style.display = "block";
-        } else {
-          label.textContent = "Plano: Free";
-          if (upgradeBtn) upgradeBtn.style.display = "inline-block";
-          if (premiumExtra) premiumExtra.style.display = "none";
-        }
+      // Lê o plano salvo no navegador
+      function getHokmahPlan() {
+        const stored = localStorage.getItem('hokmah_plan'); // Usando a nova chave
+        return stored === 'premium' ? 'premium' : 'free';
       }
+
+      // Limitação simples para o plano Free (exemplo: 3 esboços por dia)
+      function handleGenerateFree() {
+        const today = new Date().toISOString().slice(0, 10); // AAAA-MM-DD
+        const key = 'hokmah_free_count_' + today;
+        const current = parseInt(localStorage.getItem(key) || '0', 10);
+
+        if (current >= 3) {
+          alert('Você já atingiu o limite diário de esboços no plano Free.\nAssine o Premium para uso ilimitado.');
+          return;
+        }
+
+        localStorage.setItem(key, String(current + 1));
+
+        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço
+        alert('Aqui entraria a chamada do gerador de esboços (Free).');
+      }
+
+      // Premium sem limite
+      function handleGeneratePremium() {
+        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço
+        alert('Aqui entraria a chamada do gerador de esboços (Premium, ilimitado).');
+      }
+
+      // --- Função de Lógica de Upgrade (Antiga) ---
 
       async function handleUpgradeClick() {
         const btn = document.getElementById("upgrade-btn");
@@ -221,8 +308,42 @@
         }
       }
 
+      // --- Lógica de Inicialização (Mesclada) ---
+
+      // Esta função agora atualiza TODA a UI baseada no plano
+      function updateUIVisibility(plan) {
+         // 1. Obter todos os elementos da UI
+        const planLabel = document.getElementById('plan-label');
+        const upgradeBtn = document.getElementById('upgrade-btn');
+        const premiumExtraBox = document.getElementById('premium-extra-box');
+        const appFree = document.getElementById('app-free');
+        const appPremium = document.getElementById('app-premium');
+
+        // 2. Atualizar toda a UI com base no plano
+        if (plan === 'premium') {
+          if (planLabel) planLabel.textContent = 'Plano: Premium';
+          if (upgradeBtn) upgradeBtn.style.display = 'none';
+          if (premiumExtraBox) premiumExtraBox.style.display = 'block'; // Lógica antiga mantida
+          if (appPremium) appPremium.style.display = 'block';
+          if (appFree) appFree.style.display = 'none';
+        } else {
+          // é 'free'
+          if (planLabel) planLabel.textContent = 'Plano: Free';
+          if (upgradeBtn) upgradeBtn.style.display = 'inline-block';
+          if (premiumExtraBox) premiumExtraBox.style.display = 'none'; // Lógica antiga mantida
+          if (appPremium) appPremium.style.display = 'none';
+          if (appFree) appFree.style.display = 'block';
+        }
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
-        applyPlanFromStorage();
+        // 1. Obter o plano
+        const plan = getHokmahPlan();
+        
+        // 2. Atualizar a UI
+        updateUIVisibility(plan);
+
+        // 3. Adicionar listener do botão de upgrade
         const btn = document.getElementById("upgrade-btn");
         if (btn) {
           btn.addEventListener("click", handleUpgradeClick);
