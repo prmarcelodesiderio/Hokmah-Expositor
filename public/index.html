@@ -1,4 +1,4 @@
-<!doctype html>
+!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -231,39 +231,65 @@
       // URL BASE do Cloud Run
       const CLOUD_RUN_URL =
         "https://create-checkout-session-467345148998.europe-west1.run.app";
+        
+      // ====== CONFIGURAÇÃO DO PLANO (NOVO) ======
+      const FREE_LIMIT_PER_MONTH = 10;
 
-      // --- Funções de Lógica de Plano (Novas) ---
+      // --- Funções de Lógica de Plano (Atualizadas) ---
 
       // Lê o plano salvo no navegador
       function getHokmahPlan() {
         const stored = localStorage.getItem('hokmah_plan'); // Usando a nova chave
         return stored === 'premium' ? 'premium' : 'free';
       }
+      
+      // (NOVA FUNÇÃO HELPER)
+      function getCurrentMonthKey() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // 01 a 12
+        return `${year}-${month}`; // ex: "2025-11"
+      }
 
-      // Limitação simples para o plano Free (exemplo: 3 esboços por dia)
+      // (FUNÇÃO ATUALIZADA)
+      // Limitação para o plano Free (10 por mês)
       function handleGenerateFree() {
-        const today = new Date().toISOString().slice(0, 10); // AAAA-MM-DD
-        const key = 'hokmah_free_count_' + today;
-        const current = parseInt(localStorage.getItem(key) || '0', 10);
+        const monthKey = getCurrentMonthKey();
+        const storageKey = 'hokmah_free_count_' + monthKey;
 
-        if (current >= 3) {
-          alert('Você já atingiu o limite diário de esboços no plano Free.\nAssine o Premium para uso ilimitado.');
+        const current = parseInt(localStorage.getItem(storageKey) || '0', 10);
+
+        if (current >= FREE_LIMIT_PER_MONTH) {
+          alert(
+            'Você já atingiu o limite de ' +
+              FREE_LIMIT_PER_MONTH +
+              ' esboços neste mês no plano Free.\n' +
+              'Assine o Plano Premium para ter geração ilimitada.'
+          );
           return;
         }
 
-        localStorage.setItem(key, String(current + 1));
+        // Incrementa o contador deste mês
+        localStorage.setItem(storageKey, String(current + 1));
 
-        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço
-        alert('Aqui entraria a chamada do gerador de esboços (Free).');
+        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço de verdade
+        alert(
+          'Esboço Free gerado! (' +
+            (current + 1) +
+            '/' +
+            FREE_LIMIT_PER_MONTH +
+            ' neste mês)'
+        );
       }
 
+      // (FUNÇÃO ATUALIZADA)
       // Premium sem limite
       function handleGeneratePremium() {
-        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço
-        alert('Aqui entraria a chamada do gerador de esboços (Premium, ilimitado).');
+        // TODO: aqui depois vamos chamar o backend/Gemini para gerar o esboço de verdade
+        alert('Esboço Premium gerado! (ilimitado neste plano)');
       }
 
-      // --- Função de Lógica de Upgrade (Antiga) ---
+      // --- Função de Lógica de Upgrade (Antiga, mantida) ---
 
       async function handleUpgradeClick() {
         const btn = document.getElementById("upgrade-btn");
@@ -308,7 +334,7 @@
         }
       }
 
-      // --- Lógica de Inicialização (Mesclada) ---
+      // --- Lógica de Inicialização (Mesclada, mantida) ---
 
       // Esta função agora atualiza TODA a UI baseada no plano
       function updateUIVisibility(plan) {
