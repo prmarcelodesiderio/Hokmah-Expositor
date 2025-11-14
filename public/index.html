@@ -1,4 +1,4 @@
-!doctype html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -175,35 +175,121 @@
       </div>
     </header>
 
+    <!-- 
+      INÍCIO DA ATUALIZAÇÃO:
+      As seções app-free e app-premium foram substituídas pelo novo código com formulários.
+    -->
     <section id="app-free" class="app-section">
       <h2>Gerador de Esboços – Plano Free</h2>
       <p>
-        No plano gratuito você poderá gerar um número limitado de esboços por dia
-        e testar a experiência do Hokmah Expositor.
+        No plano gratuito você pode gerar até <strong>10 esboços por mês</strong>
+        neste navegador. Use para testar o Hokmah Expositor.
       </p>
 
-      <!-- Aqui depois vamos “colar” o app com limitações -->
-      <button type="button" onclick="handleGenerateFree()">
-        Gerar esboço (Free)
-      </button>
+      <form id="free-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="free-title">Título / Tema do sermão</label>
+          <input type="text" id="free-title" placeholder="Ex.: A graça que nos sustenta" />
+        </div>
+
+        <div class="form-group">
+          <label for="free-text">Texto bíblico principal</label>
+          <input type="text" id="free-text" placeholder="Ex.: 2 Coríntios 12:7-10" />
+        </div>
+
+        <div class="form-group">
+          <label for="free-method">Método de pregação</label>
+          <select id="free-method">
+            <option value="expositivo">Expositivo</option>
+            <option value="tematico">Temático</option>
+            <option value="biografico">Biográfico</option>
+            <option value="textual">Textual</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="free-emphasis">Ênfase pastoral</label>
+          <select id="free-emphasis">
+            <option value="pastoral">Pastoral</option>
+            <option value="doutrinaria">Doutrinária</option>
+            <option value="exortativa">Exortativa</option>
+            <option value="evangelistica">Evangelística</option>
+            <option value="admoestativa">Admoestativa</option>
+            <option value="apologetica">Apologética</option>
+          </select>
+        </div>
+
+        <button
+          type="button"
+          id="free-submit"
+          onclick="handleGenerateFree();"
+        >
+          Gerar esboço (Free – conta para o limite mensal)
+        </button>
+      </form>
 
       <p class="hint">
-        Para geração <strong>ilimitada</strong> de esboços e estudos, assine o plano Premium.
+        Dica: para geração <strong>ilimitada</strong> e recursos avançados,
+        assine o plano Premium.
       </p>
+
+      <h3>Resultado do esboço (Free)</h3>
+      <pre id="free-result" class="outline-result"></pre>
     </section>
 
     <section id="app-premium" class="app-section">
       <h2>Laboratório de Sermões – Plano Premium</h2>
       <p>
-        Aqui fica o seu ambiente completo de geração de esboços e estudos bíblicos,
-        com uso ilimitado e todos os recursos avançados.
+        Aqui você tem geração <strong>ilimitada</strong> de esboços e estudos
+        bíblicos, com todos os recursos liberados.
       </p>
 
-      <!-- Aqui vamos “colar” o app completo (Gemini/Hokmah) -->
-      <button type="button" onclick="handleGeneratePremium()">
-        Gerar esboço (Premium ilimitado)
-      </button>
+      <form id="premium-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="premium-title">Título / Tema do sermão</label>
+          <input type="text" id="premium-title" placeholder="Ex.: Cristo, nosso bom Pastor" />
+        </div>
+
+        <div class="form-group">
+          <label for="premium-text">Texto bíblico principal</label>
+          <input type="text" id="premium-text" placeholder="Ex.: João 10:11-18" />
+        </div>
+
+        <div class="form-group">
+          <label for="premium-method">Método de pregação</label>
+          <select id="premium-method">
+            <option value="expositivo">Expositivo</option>
+            <option value="tematico">Temático</option>
+            <option value="biografico">Biográfico</option>
+            <option value="textual">Textual</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="premium-emphasis">Ênfase pastoral</label>
+          <select id="premium-emphasis">
+            <option value="pastoral">Pastoral</option>
+            <option value="doutrinaria">Doutrinária</option>
+            <option value="exortativa">Exortativa</option>
+            <option value="evangelistica">Evangelística</option>
+            <option value="admoestativa">Admoestativa</option>
+            <option value="apologetica">Apologética</option>
+          </select>
+        </div>
+
+        <button
+          type="button"
+          id="premium-submit"
+          onclick="handleGeneratePremium();"
+        >
+          Gerar esboço (Premium – ilimitado)
+        </button>
+      </form>
+
+      <h3>Resultado do esboço (Premium)</h3>
+      <pre id="premium-result" class="outline-result"></pre>
     </section>
+    <!-- FIM DA ATUALIZAÇÃO -->
 
 
     <div class="page">
