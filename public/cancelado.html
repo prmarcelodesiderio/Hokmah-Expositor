@@ -1,9 +1,164 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><title>Pagamento cancelado</title></head>
-<body>
-  <h1>Pagamento cancelado ✖️</h1>
-  <p>Você cancelou o checkout.</p>
-  <p><a href="/">Voltar</a></p>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Pagamento cancelado | Hokmah Expositor</title>
+    <meta
+      name="description"
+      content="O pagamento foi cancelado. Você pode tentar novamente ou voltar ao app."
+    />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      :root {
+        --bg: #0b1220;
+        --card: #0f172a;
+        --text: #e5e7eb;
+        --muted: #a3a3a3;
+        --brand: #2563eb;
+        --warn: #f59e0b;
+        --danger: #ef4444;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(1200px 600px at 50% -10%, #1e293b 10%, transparent 60%),
+          linear-gradient(180deg, #0b1220 0%, #0b1220 100%);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .card {
+        width: min(720px, 100%);
+        background: color-mix(in oklab, var(--card) 92%, transparent);
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 6px 30px rgba(0,0,0,.35);
+      }
+      .title {
+        margin: 0 0 8px;
+        font-size: clamp(20px, 2.6vw, 28px);
+        font-weight: 800;
+        letter-spacing: .2px;
+      }
+      .alert {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--danger);
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+      .alert svg { flex: 0 0 22px; }
+      p { margin: 8px 0; color: var(--muted); line-height: 1.55; }
+      .hr { height: 1px; background: #1f2937; margin: 16px 0; border-radius: 1px; }
+      .kvd {
+        display: grid; grid-template-columns: 140px 1fr; gap: 6px 10px;
+        margin-top: 14px; font-size: 13px;
+      }
+      .kvd div:nth-child(odd){ color:#9ca3af; }
+
+      .actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+      .btn {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform .08s ease, box-shadow .12s ease, opacity .2s ease;
+      }
+      .btn-primary {
+        background: var(--brand);
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(37, 99, 235, .35);
+      }
+      .btn-primary:hover { transform: translateY(-1px); }
+      .btn-outline {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid #334155;
+      }
+      .btn-muted {
+        background: transparent;
+        color: #cbd5e1;
+        border: 1px dashed #334155;
+      }
+      .note { font-size: 12px; color: #9ca3af; margin-top: 10px; }
+      form { margin: 0; }
+      a.btn { text-decoration: none; display: inline-block; }
+    </style>
+
+    <script>
+      // Garante que o estado permaneça como Free após cancelamento
+      (function () {
+        try {
+          localStorage.setItem("hokmah_plan", "free");
+          localStorage.setItem("hokmah_started", "yes"); // mantém o app abrindo
+          localStorage.setItem("hokmah_cancel_at", new Date().toISOString());
+
+          // (opcional) loga o session_id cancelado, se houver na URL
+          const params = new URLSearchParams(location.search);
+          const sessionId = params.get("session_id");
+          if (sessionId) {
+            console.log("[Stripe] checkout cancelado - session_id:", sessionId);
+            localStorage.setItem("hokmah_last_canceled_session_id", sessionId);
+          }
+        } catch (e) {
+          console.error("Falha ao registrar cancelamento:", e);
+        }
+      })();
+
+      function goHome() {
+        // ajuste para seu domínio se necessário (ex.: https://gen-lang-client-0187...web.app/)
+        location.href = "/";
+      }
+    </script>
+  </head>
+
+  <body>
+    <main class="card" role="main">
+      <div class="alert">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 9v4" />
+          <path d="M12 17h.01" />
+          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+        </svg>
+        Pagamento cancelado
+      </div>
+
+      <h1 class="title">A cobrança não foi concluída</h1>
+      <p>Nenhuma cobrança foi efetuada. Você pode tentar novamente quando quiser ou continuar usando o plano Free.</p>
+
+      <div class="hr"></div>
+
+      <div class="kvd">
+        <div>Status atual</div><div>Plano Free (sem alterações)</div>
+        <div>Próximos passos</div><div>Tente novamente o checkout ou volte ao app</div>
+      </div>
+
+      <div class="actions">
+        <!-- Botão para refazer o checkout -->
+        <form action="/create-checkout-session" method="POST">
+          <button class="btn btn-primary" type="submit">Tentar novamente</button>
+        </form>
+
+        <!-- Voltar para o app (index) -->
+        <a href="/" class="btn btn-outline" onclick="goHome(); return false;">Voltar ao app</a>
+
+        <!-- Contato (opcional, ajuste o e-mail) -->
+        <a class="btn btn-muted" href="mailto:suporte@seu-dominio.app?subject=Ajuda%20no%20checkout%20Hokmah%20Expositor">Falar com suporte</a>
+      </div>
+
+      <p class="note">Se o problema persistir, entre em contato. Estamos prontos para ajudar.</p>
+    </main>
+  </body>
 </html>
