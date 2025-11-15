@@ -1,506 +1,506 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hokmah Expositor — Plano Free</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hokmah Expositor - Assistente IA para Pastores Reformados</title>
+
+    <link rel="canonical" href="https://seu-dominio.app/" />
+    <meta name="description" content="Gere sermões e estudos com estrutura exegética, ênfase pastoral e citações reformadas. Free e Premium. Experimente grátis." />
+    <meta property="og:title" content="Hokmah Expositor — Sermon &amp; Study AI" />
+    <meta property="og:description" content="Da ideia ao púlpito com rigor reformado." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://seu-dominio.app/og-cover.jpg" />
+    <meta property="og:url" content="https://seu-dominio.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hokmah Expositor — Sermon & Study AI" />
+    <meta name="twitter:description" content="Da ideia ao púlpito com rigor reformado." />
+
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="/_sdk/element_sdk.js" defer></script>
+    <script src="/_sdk/data_sdk.js" type="text/javascript" defer></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Hokmah Expositor",
+        "applicationCategory": "ReligionApplication",
+        "operatingSystem": "Web",
+        "offers": { "@type": "Offer", "price": "24.90", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" },
+        "description": "Assistente de IA para gerar e refinar sermões, estudos e séries com teologia reformada."
+      }
+    </script>
 
     <style>
+      body { box-sizing: border-box; }
+      .bg-grid-gray-700\/10 {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(55 65 81 / 0.1)'%3e%3cpath d='m0 .5h32m-32 32v-32'/%3e%3c/svg%3e");
+      }
+      .mask-radial { mask-image: radial-gradient(ellipse at center, black 30%, transparent 100%); }
+
+      /* ===== CSS DO APP ===== */
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #f5f5f5;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0; padding: 0;
       }
-
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: #ffffff;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      header.app-header {
+        display:flex; justify-content:space-between; align-items:center;
+        padding:1rem 2rem; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,.06);
       }
-
-      header h1 {
-        margin: 0;
-        font-size: 1.3rem;
-      }
-
-      .header-right {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .plan-badge {
-        padding: 0.4rem 0.9rem;
-        border-radius: 999px;
-        border: 1px solid #ddd;
-        background: #fafafa;
-        font-size: 0.9rem;
-      }
-
-      .page {
-        max-width: 900px;
-        margin: 2.5rem auto;
-        padding: 0 1rem;
-      }
-
-      .app-section {
-        max-width: 900px;
-        margin: 1.5rem auto;
-        padding: 1.5rem;
-        background: #ffffff;
-        border-radius: 12px;
-        border: 1px solid #e0e0e0;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      }
-
-      .app-section .hint {
-        font-size: 0.9rem;
-        color: #555;
-        margin-top: 1rem;
-      }
-
-      .app-section button {
-        border: none;
-        border-radius: 8px;
-        padding: 0.7rem 1.2rem;
-        font-size: 0.95rem;
-        font-weight: 600;
-        cursor: pointer;
-        background: #2e7d32;
-        color: white;
-        transition: background 0.15s ease;
-      }
-
-      .app-section button:hover {
-        background: #1b5e20;
-      }
-
-      #app-free button {
-        background: #3949ab;
-      }
-      #app-free button:hover {
-        background: #283593;
-      }
-
-      .card {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-        border: 1px solid #e0e0e0;
-      }
-
-      h2 {
-        margin-top: 0;
-        font-size: 1.4rem;
-      }
-
-      p {
-        line-height: 1.5;
-      }
-
-      #upgrade-btn {
-        display: inline-block;
-        border: none;
-        border-radius: 999px;
-        padding: 0.75rem 1.8rem;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        color: white;
-        background: #1e88e5;
-        box-shadow: 0 2px 6px rgba(30, 136, 229, 0.35);
-        transition: background 0.15s ease, transform 0.1s ease,
-          box-shadow 0.1s ease;
-      }
-
-      #upgrade-btn:hover {
-        background: #1565c0;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 10px rgba(30, 136, 229, 0.4);
-      }
-
-      #upgrade-btn:disabled {
-        background: #b0bec5;
-        box-shadow: none;
-        cursor: default;
-        transform: none;
-      }
-
-      #upgrade-status {
-        margin-top: 0.75rem;
-        font-size: 0.9rem;
-        color: #555;
-      }
-
-      .status-error {
-        color: #c62828;
-        font-weight: 500;
-      }
-
-      .status-ok {
-        color: #2e7d32;
-        font-weight: 500;
-      }
-
-      .premium-box {
-        display: none; /* script controla depois */
-        color: #1b5e20;
-        font-size: 0.95rem;
-      }
-
-      /* ===== INÍCIO DA SUBSTITUIÇÃO ===== */
-      .landing-section {
-        max-width: 1100px;
-        margin: 2.5rem auto 1.5rem;
-        padding: 0 1rem;
-      }
-
-      .landing-card {
-        background: #ffffff;
-        border-radius: 20px;
-        padding: 2.5rem 2.75rem;
-        border: 1px solid #e0e7ff;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-      }
-
-      .landing-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.3rem 0.9rem;
-        border-radius: 999px;
-        background: #e3f2fd;
-        color: #1565c0;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        margin-bottom: 0.9rem;
-      }
-
-      .hero-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2.5rem;
-        align-items: flex-start;
-      }
-
-      .hero-main,
-      .hero-side {
-        flex: 1 1 280px;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-        margin: 0 0 0.75rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1rem;
-        color: #4b5563;
-        margin: 0 0 1rem;
-      }
-
-      .hero-list {
-        margin: 0 0 1.4rem;
-        padding-left: 1.2rem;
-        color: #111827;
-      }
-
-      .hero-list li {
-        margin-bottom: 0.35rem;
-      }
-
-      .hero-cta {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-      }
-
-      .hero-note {
-        font-size: 0.9rem;
-        color: #4b5563;
-      }
-
-      .hero-side-title {
-        font-size: 1.1rem;
-        margin: 0 0 0.5rem;
-      }
-
-      .hero-side p {
-        font-size: 0.95rem;
-        color: #4b5563;
-        margin: 0 0 0.8rem;
-      }
-
-      .hero-side-list {
-        margin: 0;
-        padding-left: 1.1rem;
-        font-size: 0.95rem;
-        color: #111827;
-      }
-
-      .hero-side-list li {
-        margin-bottom: 0.35rem;
-      }
-
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 1.25rem;
-        margin-top: 2rem;
-      }
-
-      .feature-card {
-        border-radius: 14px;
-        border: 1px solid #e5e7eb;
-        background: #f9fafb;
-        padding: 1rem 1.2rem;
-      }
-
-      .feature-title {
-        font-size: 1rem;
-        margin: 0 0 0.4rem;
-      }
-
-      .feature-card p {
-        font-size: 0.9rem;
-        margin: 0;
-        color: #4b5563;
-      }
-
-      .notice-box {
-        margin-top: 2rem;
-        border-radius: 12px;
-        border: 1px solid #fde68a;
-        background: #fffbeb;
-        padding: 1rem 1.2rem;
-        font-size: 0.92rem;
-        color: #7c2d12;
-      }
-
-      .notice-box strong {
-        display: block;
-        margin-bottom: 0.3rem;
-      }
-
-      .btn {
-        border: none;
-        border-radius: 999px;
-        padding: 0.8rem 1.9rem;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        color: white;
-        background: #2e7d32;
-        box-shadow: 0 10px 24px rgba(34, 197, 94, 0.35);
-      }
-
-      .btn:hover {
-        background: #1b5e20;
-      }
-
-      @media (max-width: 640px) {
-        .landing-card {
-          padding: 1.8rem 1.5rem;
-        }
-
-        .hero-title {
-          font-size: 1.6rem;
-        }
-      }
-      /* ===== FIM DA SUBSTITUIÇÃO ===== */
-
-      .form-group {
-        margin-bottom: 0.9rem;
-      }
-
-      .form-group label {
-        display: block;
-        font-size: 0.9rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        padding: 0.45rem 0.5rem;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        font: inherit;
-      }
-
-      .outline-result {
-        background: #111827;
-        color: #e5e7eb;
-        padding: 1rem;
-        border-radius: 8px;
-        max-height: 400px;
-        overflow: auto;
-        white-space: pre-wrap;
-        font-size: 0.9rem;
-      }
+      header.app-header h1 { margin:0; font-size:1.3rem; }
+      .header-right { display:flex; align-items:center; gap:.75rem; }
+      .plan-badge { padding:.4rem .9rem; border-radius:999px; border:1px solid #ddd; background:#fafafa; font-size:.9rem; }
+      .page { max-width:900px; margin:2.5rem auto; padding:0 1rem; }
+      .app-section { max-width:900px; margin:1.5rem auto; padding:1.5rem; background:#fff; border-radius:12px; border:1px solid #e0e0e0; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+      .app-section .hint { font-size:.9rem; color:#555; margin-top:1rem; }
+      .app-section button { border:none; border-radius:8px; padding:.7rem 1.2rem; font-size:.95rem; font-weight:600; cursor:pointer; background:#2e7d32; color:#fff; transition:background .15s ease; }
+      .app-section button:hover { background:#1b5e20; }
+      #app-free button { background:#3949ab; } #app-free button:hover{ background:#283593; }
+      .card { background:#fff; border-radius:12px; padding:2rem; box-shadow:0 2px 10px rgba(0,0,0,.06); border:1px solid #e0e0e0; }
+      .app-section h2,.page h2 { margin-top:0; font-size:1.4rem; font-weight:600; }
+      .app-section p,.page p { line-height:1.5; color:#333; }
+      #upgrade-btn { display:inline-block; border:none; border-radius:999px; padding:.75rem 1.8rem; font-size:1rem; font-weight:600; cursor:pointer; color:#fff; background:#1e88e5; box-shadow:0 2px 6px rgba(30,136,229,.35); transition:background .15s, transform .1s, box-shadow .1s; }
+      #upgrade-btn:hover { background:#1565c0; transform:translateY(-1px); box-shadow:0 4px 10px rgba(30,136,229,.4); }
+      #upgrade-btn:disabled { background:#b0bec5; box-shadow:none; cursor:default; transform:none; }
+      #upgrade-status { margin-top:.75rem; font-size:.9rem; color:#555; }
+      .status-error { color:#c62828; font-weight:500; }
+      .status-ok { color:#2e7d32; font-weight:500; }
+      .premium-box { display:none; color:#1b5e20; font-size:.95rem; }
+      .form-group { margin-bottom:.9rem; }
+      .form-group label { display:block; font-size:.9rem; margin-bottom:.25rem; color:#333; }
+      .form-group input,.form-group select { width:100%; padding:.45rem .5rem; border-radius:6px; border:1px solid #ccc; font:inherit; box-sizing:border-box; }
+      .outline-result { background:#111827; color:#e5e7eb; padding:1rem; border-radius:8px; max-height:400px; overflow:auto; white-space:pre-wrap; font-size:.9rem; }
+      @view-transition { navigation: auto; }
     </style>
   </head>
 
-  <body>
-    <header>
+  <body class="bg-white">
+    <!-- LANDING (aparece para visitante e free antes do "Começar") -->
+    <div id="landing" style="display:none;">
+      <!-- Header -->
+      <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            <span class="font-semibold text-gray-900">Hokmah Expositor</span>
+          </div>
+          <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">Recursos</a>
+            <a href="#authority" class="text-gray-600 hover:text-gray-900 transition-colors">Teologia</a>
+            <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition-colors">Planos</a>
+          </nav>
+          <div class="flex items-center gap-3">
+            <a href="#" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Entrar</a>
+            <button type="button" onclick="startFree()" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Começar Gratuitamente</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="relative bg-gray-900 text-white py-28 md:py-36 overflow-hidden">
+        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
+          <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500 text-xs font-semibold uppercase tracking-wider mb-4">IA feita por pastores reformados, para pastores reformados</span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">Menos tempo lutando com o esboço. <br>Mais tempo na Palavra e na oração.</h1>
+          <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">O Hokmah Expositor é um assistente de IA que organiza suas ideias, sugere estruturas e aponta fontes reformadas de referência — sem substituir o seu estudo, sua oração e sua voz no púlpito.</p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4 mb-3">
+            <button type="button" onclick="startFree()" data-analytics="hero_primary" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-colors">
+              Começar Gratuitamente
+              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+            <a href="#pricing" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium border border-gray-500 bg-transparent hover:bg-gray-800 transition-colors">Ver planos e recursos</a>
+          </div>
+          <p class="text-sm text-gray-400">Plano Free sem cartão · Cancele o Premium quando quiser</p>
+        </div>
+        <div class="absolute inset-0 bg-grid-gray-700/10 opacity-50 mask-radial"></div>
+      </section>
+
+      <!-- Features Tabs -->
+      <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Recursos para cada momento do seu ministério</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Ferramentas específicas para diferentes tipos de pregação e ensino</p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="border-b border-gray-200">
+              <nav class="flex overflow-x-auto">
+                <button class="feature-tab active px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 border-blue-600 text-blue-600" data-tab="sermon" aria-label="Abrir aba: Gerar Sermão">
+                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                  Gerar Sermão
+                </button>
+                <button class="feature-tab px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="refine" aria-label="Abrir aba: Refinar Sermão">
+                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  Refinar Sermão
+                </button>
+                <button class="feature-tab px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="series" aria-label="Abrir aba: Planejar Série">
+                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  Planejar Série
+                </button>
+                <button class="feature-tab px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="study" aria-label="Abrir aba: Estudo Bíblico">
+                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                  Estudo Bíblico
+                </button>
+                <button class="feature-tab px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="special" aria-label="Abrir aba: Ocasiões Especiais">
+                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                  Ocasiões Especiais
+                </button>
+              </nav>
+            </div>
+
+            <div class="p-8">
+              <!-- Sermon Tab -->
+              <div id="sermon-content" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Pregação Expositiva Reformada</h3>
+                    <p class="text-gray-600 mb-6">Desenvolva sermões fiéis ao texto bíblico com estruturas claras e aplicações práticas, seguindo a tradição reformada de exposição das Escrituras.</p>
+                    <ul class="space-y-3">
+                      <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Análise exegética do texto original</span></li>
+                      <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Estrutura homilética sólida</span></li>
+                      <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Aplicações práticas e pastorais</span></li>
+                    </ul>
+                  </div>
+                  <div class="bg-gray-100 rounded-lg p-6">
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 class="font-semibold text-gray-900 mb-2">Exemplo de Estrutura</h4>
+                      <div class="space-y-2 text-sm text-gray-600">
+                        <div>📖 Texto: Efésios 2:8-10</div>
+                        <div>🎯 Tema: A Graça Salvadora</div>
+                        <div>📝 Pontos Principais:</div>
+                        <div class="ml-4">• A fonte da salvação (v.8)</div>
+                        <div class="ml-4">• O meio da salvação (v.9)</div>
+                        <div class="ml-4">• O propósito da salvação (v.10)</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Series Tab -->
+              <div id="series-content" class="tab-content hidden">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Séries Temáticas e Livros</h3>
+                    <p class="text-gray-600 mb-6">Planeje séries completas com coerência teológica e progressão lógica, mantendo o interesse da congregação ao longo de múltiplos sermões.</p>
+                    <ul class="space-y-3">
+                      <li><strong>Cronograma completo</strong> com datas e textos para 4–52 semanas</li>
+                      <li><strong>Títulos conectados</strong> que criam expectativa e unidade temática</li>
+                      <li><strong>Progressão teológica</strong> do básico ao avançado por série</li>
+                      <li><strong>Materiais de apoio</strong> para divulgação e acompanhamento</li>
+                      <li><strong>Flexibilidade pastoral</strong> para ajustes conforme necessidades da igreja</li>
+                    </ul>
+                  </div>
+                  <div class="bg-gray-100 rounded-lg p-6">
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 class="font-semibold text-gray-900 mb-2">Série: "As Bem-Aventuranças"</h4>
+                      <div class="space-y-2 text-sm text-gray-600">
+                        <div>📅 8 semanas • Mateus 5:3-12</div>
+                        <div>🎯 Tema: O Caráter do Cristão</div>
+                        <div>📝 Sermões:</div>
+                        <div class="ml-4">1. Pobres de espírito (v.3)</div>
+                        <div class="ml-4">2. Os que choram (v.4)</div>
+                        <div class="ml-4">3. Os mansos (v.5)</div>
+                        <div class="ml-4">+ 5 sermões...</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Study Tab -->
+              <div id="study-content" class="tab-content hidden">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Estudos Bíblicos Interativos</h3>
+                    <p class="text-gray-600 mb-6">Crie estudos envolventes para pequenos grupos, EBD e discipulado, com perguntas reflexivas e aplicações práticas.</p>
+                    <ul class="space-y-3">
+                      <li><strong>Roteiro completo</strong> com introdução, desenvolvimento e conclusão (45-90min)</li>
+                      <li><strong>Perguntas graduais</strong> do básico ao reflexivo para engajar todos os níveis</li>
+                      <li><strong>Atividades práticas</strong> e dinâmicas para fixar o aprendizado</li>
+                      <li><strong>Material do líder</strong> com respostas-modelo e dicas de condução</li>
+                      <li><strong>Aplicações específicas</strong> para diferentes faixas etárias e contextos</li>
+                    </ul>
+                  </div>
+                  <div class="bg-gray-100 rounded-lg p-6">
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 class="font-semibold text-gray-900 mb-2">Estudo: "Fé em Ação"</h4>
+                      <div class="space-y-2 text-sm text-gray-600">
+                        <div>📖 Texto: Tiago 2:14-26</div>
+                        <div>⏱️ Duração: 45-60 min</div>
+                        <div>🎯 Objetivo: Compreender a relação entre fé e obras</div>
+                        <div>❓ Perguntas-chave:</div>
+                        <div class="ml-4">• O que é fé verdadeira?</div>
+                        <div class="ml-4">• Como a fé se manifesta?</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Special Tab -->
+              <div id="special-content" class="tab-content hidden">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Ocasiões Especiais</h3>
+                    <p class="text-gray-600 mb-6">Mensagens específicas para batismos, casamentos, funerais, Natal, Páscoa e outras datas importantes do calendário cristão.</p>
+                    <ul class="space-y-3">
+                      <li><strong>Mensagens contextualizadas</strong> para batismos, casamentos, funerais e dedicações</li>
+                      <li><strong>Calendário litúrgico</strong> com sermões para Natal, Páscoa, Pentecostes e Reforma</li>
+                      <li><strong>Adaptação de audiência</strong> considerando visitantes e não-cristãos presentes</li>
+                      <li><strong>Elementos cerimoniais</strong> com liturgia e orientações práticas</li>
+                      <li><strong>Sensibilidade pastoral</strong> para momentos delicados e celebrativos</li>
+                    </ul>
+                  </div>
+                  <div class="bg-gray-100 rounded-lg p-6">
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 class="font-semibold text-gray-900 mb-2">Mensagem de Batismo</h4>
+                      <div class="space-y-2 text-sm text-gray-600">
+                        <div>📖 Texto: Romanos 6:1-11</div>
+                        <div>🎯 Tema: Mortos para o Pecado</div>
+                        <div>👥 Audiência: Igreja + familiares</div>
+                        <div>📝 Estrutura:</div>
+                        <div class="ml-4">• O significado do batismo</div>
+                        <div class="ml-4">• A nova vida em Cristo</div>
+                        <div class="ml-4">• O compromisso da igreja</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Refine Tab -->
+              <div id="refine-content" class="tab-content hidden">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Refinamento e Revisão</h3>
+                    <p class="text-gray-600 mb-6">Aprimore sermões existentes com sugestões de melhoria, verificação teológica e otimização da comunicação.</p>
+                    <ul class="space-y-3">
+                      <li>Organiza título, proposição e <strong>2–4 divisões</strong></li>
+                      <li><strong>Argumentação por divisão</strong> com textos base + aprofundamento</li>
+                      <li><strong>Citação</strong> e <strong>ilustração</strong> alinhadas ao tema (regenere por bloco)</li>
+                      <li><strong>Análise teológica</strong> com verificação confessional reformada</li>
+                      <li><strong>Sugestões de clareza</strong> para melhor comunicação pastoral</li>
+                    </ul>
+                  </div>
+                  <div class="bg-gray-100 rounded-lg p-6">
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 class="font-semibold text-gray-900 mb-2">Análise de Sermão</h4>
+                      <div class="space-y-2 text-sm text-gray-600">
+                        <div>✅ Estrutura: Bem organizada</div>
+                        <div>⚠️ Aplicação: Pode ser mais específica</div>
+                        <div>✅ Teologia: Consistente com CFW</div>
+                        <div>💡 Sugestões:</div>
+                        <div class="ml-4">• Adicionar ilustração no ponto 2</div>
+                        <div class="ml-4">• Fortalecer a conclusão</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /tabs -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Authority -->
+      <section id="authority" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Fundamentado na Teologia Reformada</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Nossa IA foi treinada com as melhores fontes da tradição reformada</p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Confissões Históricas</h3>
+              <p class="text-gray-600">Baseado na Confissão de Fé de Westminster, Catecismos e documentos confessionais reformados</p>
+            </div>
+            <div class="text-center">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Teólogos Clássicos</h3>
+              <p class="text-gray-600">Incorpora insights de Calvino, Spurgeon, Lloyd-Jones, Packer e outros gigantes da fé</p>
+            </div>
+            <div class="text-center">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Exegese Sólida</h3>
+              <p class="text-gray-600">Prioriza o método histórico-gramatical e a analogia da fé na interpretação bíblica</p>
+            </div>
+          </div>
+          <div class="bg-gray-50 rounded-2xl p-8">
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Desenvolvido por Pastores Reformados</h3>
+              <p class="text-gray-600 max-w-3xl mx-auto">Nossa equipe é formada por pastores e teólogos comprometidos com a sã doutrina, que entendem os desafios reais do ministério pastoral e da pregação expositiva.</p>
+            </div>
+            <div class="flex justify-center">
+              <div class="bg-white rounded-lg p-6 shadow-sm max-w-md">
+                <blockquote class="text-gray-700 italic mb-4">"A pregação não é sobre eloquência humana, mas sobre a fidelidade à Palavra de Deus. O Hokmah Expositor nos ajuda a ser mais fiéis ao texto e mais claros na comunicação."</blockquote>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+                  <div>
+                    <div class="font-semibold text-gray-900">Rev. Marcelo Desiderio</div>
+                    <div class="text-sm text-gray-600">Pastor, Quinta Igreja Presbiteriana de Montes Claros</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing -->
+      <section id="pricing" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Planos para Todo Ministério</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Comece gratuitamente e evolua conforme suas necessidades</p>
+          </div>
+          <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Free -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+              <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Gratuito</h3>
+                <div class="text-4xl font-bold text-gray-900 mb-2">R$ 0</div>
+                <p class="text-gray-600">Para começar</p>
+              </div>
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">10 gerações por mês</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Estruturas básicas</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Suporte por email</span></li>
+              </ul>
+              <button type="button" onclick="startFree()" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 transition-colors">Começar Gratuitamente</button>
+            </div>
+
+            <!-- Premium -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-500 relative">
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Mais Popular</span>
+              </div>
+              <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+                <div class="text-4xl font-bold text-gray-900 mb-2">R$ 24,90</div>
+                <p class="text-gray-600">por mês (valor de lançamento)</p>
+              </div>
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Gerações <strong>ilimitadas</strong> (sermões e estudos)</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700"><strong>Refinar Sermão</strong> com citação + ilustração por divisão</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700"><strong>Planejar Série</strong> (títulos, textos, divisões e EBD/PG opcional)</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Referências cruzadas + termo grego/hebraico (opcional)</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Exportações: PDF, DOCX e Markdown</span></li>
+              </ul>
+              <p class="text-xs text-gray-500 mt-2 mb-6">Algumas versões bíblicas exigem licença. Oferecemos alternativas de domínio público/licenciadas.</p>
+              <a href="#" onclick="document.getElementById('upgrade-form').submit(); return false;" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Assinar Premium</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lead magnet -->
+      <section id="signup" class="py-16 bg-white border-t border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Receba um esboço modelo por semana</h3>
+          <p class="text-gray-600 mb-6">Dicas de homilética reformada + exemplos prontos (PT/EN). Cancele quando quiser.</p>
+          <form class="flex flex-col sm:flex-row gap-3 justify-center" action="https://seu-backend/subscribe" method="post">
+            <input type="email" name="email" required class="w-full sm:w-96 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="seu@email.com" />
+            <button type="submit" data-analytics="signup_submit" class="px-6 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700">Quero receber</button>
+            <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off" />
+          </form>
+          <p class="text-xs text-gray-500 mt-3">Sem spam. <a href="/privacidade" class="underline">Política de Privacidade</a>.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">Perguntas Frequentes</h3>
+          <div class="divide-y divide-gray-200">
+            <details class="py-4" open><summary class="font-semibold text-gray-900 cursor-pointer">O app substitui meu estudo?</summary><p class="mt-2 text-gray-600">Não. Ele organiza e acelera seu preparo; você continua responsável pela exegese e aplicação pastoral.</p></details>
+            <details class="py-4"><summary class="font-semibold text-gray-900 cursor-pointer">Posso escolher a versão bíblica?</summary><p class="mt-2 text-gray-600">Sim. Respeitamos licenças e oferecemos versões alternativas quando necessário.</p></details>
+            <details class="py-4"><summary class="font-semibold text-gray-900 cursor-pointer">Qual o limite do plano Free?</summary><p class="mt-2 text-gray-600">10 gerações/mês com pré-visualização e exportação básica.</p></details>
+            <details class="py-4"><summary class="font-semibold text-gray-900 cursor-pointer">Posso cancelar quando quiser?</summary><p class="mt-2 text-gray-600">Sim. Pagamento via Stripe e cancelamento a qualquer momento.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid md:grid-cols-4 gap-8">
+            <div>
+              <div class="flex items-center gap-2 mb-4">
+                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                <span class="font-semibold">Hokmah Expositor</span>
+              </div>
+              <p class="text-gray-400 text-sm">Assistente de IA para pastores reformados, desenvolvido com amor pela Igreja de Cristo.</p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Produto</h4>
+              <ul class="space-y-2 text-sm text-gray-400">
+                <li><a href="#" class="hover:text-white transition-colors">Recursos</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Preços</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Suporte</h4>
+              <ul class="space-y-2 text-sm text-gray-400">
+                <li><a href="#" class="hover:text-white transition-colors">Documentação</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Tutoriais</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Contato</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Empresa</h4>
+              <ul class="space-y-2 text-sm text-gray-400">
+                <li><a href="#" class="hover:text-white transition-colors">Sobre</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Privacidade</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+            <p>© 2024 Hokmah Expositor. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- /LANDING -->
+
+    <!-- HEADER DO APP (checkout + rótulo de plano) -->
+    <header class="app-header" id="app-header" style="display:none;">
       <h1>Hokmah Expositor</h1>
       <div class="header-right">
         <div id="plan-label" class="plan-badge">Plano: Free</div>
-
-        <form
-          id="upgrade-form"
-          action="/create-checkout-session"
-          method="POST"
-          style="margin: 0;"
-        >
+        <form id="upgrade-form" action="/create-checkout-session" method="POST" style="margin:0;">
           <button id="upgrade-btn" type="submit">Assinar Premium</button>
         </form>
       </div>
     </header>
 
-    <section id="landing" class="landing-section">
-      <div class="landing-card">
-        <div class="hero-grid">
-          <div class="hero-main">
-            <div class="landing-badge">
-              Para pastores, pregadores e líderes
-            </div>
-
-            <h1 class="hero-title">
-              Hokmah Expositor — IA a serviço da pregação cristocêntrica
-            </h1>
-
-            <p class="hero-subtitle">
-              Um laboratório de esboços pensado para pastores que amam a
-              Escritura, prezam pela teologia reformada e precisam organizar
-              melhor o tempo entre estudo, família e cuidado da igreja.
-            </p>
-
-            <ul class="hero-list">
-              <li>Esboços expositivos, temáticos, biográficos e textuais.</li>
-              <li>
-                Ênfase pastoral reformada: Cristo ao centro, graça soberana e
-                <em>Sola Scriptura</em>.
-              </li>
-              <li>
-                Divisões claras, aplicações pastorais e sugestões de citações e
-                ilustrações.
-              </li>
-            </ul>
-
-            <div class="hero-cta">
-              <button type="button" class="btn" onclick="startFree()">
-                Comece grátis
-              </button>
-              <p class="hero-note">
-                Comece agora no <strong>plano Free</strong> com
-                <strong>10 esboços por mês</strong> neste navegador. Sem cartão,
-                sem compromisso. Quando desejar, você pode migrar para o
-                <strong>Plano Premium</strong> com uso ilimitado.
-              </p>
-            </div>
-          </div>
-
-          <div class="hero-side">
-            <h3 class="hero-side-title">
-              Mais tempo para o que só você pode fazer
-            </h3>
-            <p>
-              Nenhum aplicativo visita enfermos, aconselha famílias ou ora com as
-              ovelhas. O Hokmah existe para aliviar a parte técnica do esboço e
-              devolver horas preciosas ao seu ministério.
-            </p>
-            <ul class="hero-side-list">
-              <li>
-                Ganhe tempo na organização de ideias e estrutura do sermão.
-              </li>
-              <li>
-                Invista mais em oração, estudo profundo e discipulado pessoal.
-              </li>
-              <li>Proteja espaços de descanso e tempo com sua família.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="feature-grid">
-          <div class="feature-card">
-            <h4 class="feature-title">Fundamentado na teologia reformada</h4>
-            <p>
-              Configurado para refletir uma cosmovisão reformada: centralidade
-              de Cristo, soberania de Deus, suficiência das Escrituras e
-              compromisso confessional histórico.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <h4 class="feature-title">Focado no pastor local</h4>
-            <p>
-              Pensado para quem prega semana após semana. Estruturas clássicas de
-              homilética, auxílio para séries de sermões, cultos ocasionais e
-              estudos bíblicos.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <h4 class="feature-title">Ferramenta, não substituto</h4>
-            <p>
-              O Hokmah organiza ideias, sugere caminhos e ajuda na clareza do
-              sermão, mas não prega por você. Ele é um servo, não um atalho
-              espiritual.
-            </p>
-          </div>
-        </div>
-
-        <div class="notice-box">
-          <strong>Aviso pastoral importante</strong>
-          <p>
-            O Hokmah Expositor <strong>não substitui</strong> o estudo diligente
-            da Palavra nem a vida de oração. Nenhuma inteligência artificial pode
-            ocupar o lugar da ação do Espírito Santo, da exegese séria do texto e
-            da devoção particular do pregador. Use esta ferramenta para servir
-            melhor a Cristo e à Sua igreja, nunca para fugir da
-            responsabilidade de buscar o Senhor nas Escrituras.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <div id="app-container">
+    <!-- APP CONTAINER -->
+    <div id="app-container" style="display:none;">
       <section id="app-free" class="app-section">
         <h2>Gerador de Esboços – Plano Free</h2>
-        <p>
-          No plano gratuito você pode gerar até
-          <strong>10 esboços por mês</strong>
-          neste navegador. Use para testar o Hokmah Expositor.
-        </p>
+        <p>No plano gratuito você pode gerar até <strong>10 esboços por mês</strong> neste navegador. Use para testar o Hokmah Expositor.</p>
 
         <form id="free-form" onsubmit="return false;">
           <div class="form-group">
             <label for="free-title">Título / Tema do sermão</label>
-            <input
-              type="text"
-              id="free-title"
-              placeholder="Ex.: A graça que nos sustenta"
-            />
+            <input type="text" id="free-title" placeholder="Ex.: A graça que nos sustenta" />
           </div>
-
           <div class="form-group">
             <label for="free-text">Texto bíblico principal</label>
-            <input
-              type="text"
-              id="free-text"
-              placeholder="Ex.: 2 Coríntios 12:7-10"
-            />
+            <input type="text" id="free-text" placeholder="Ex.: 2 Coríntios 12:7-10" />
           </div>
-
           <div class="form-group">
             <label for="free-method">Método de pregação</label>
             <select id="free-method">
@@ -510,7 +510,6 @@
               <option value="textual">Textual</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="free-emphasis">Ênfase pastoral</label>
             <select id="free-emphasis">
@@ -522,95 +521,135 @@
               <option value="apologetica">Apologética</option>
             </select>
           </div>
-
-          <button
-            type="button"
-            id="free-submit"
-            onclick="handleGenerateFree();"
-          >
-            Gerar esboço (Free – conta para o limite mensal)
-          </button>
+          <button type="button" id="free-submit" onclick="handleGenerateFree();">Gerar esboço (Free – conta para o limite mensal)</button>
         </form>
 
-        <p class="hint">
-          Dica: para geração <strong>ilimitada</strong> e recursos avançados,
-          assine o plano Premium.
-        </p>
+        <p class="hint">Dica: para geração <strong>ilimitada</strong> e recursos avançados, assine o plano Premium.</p>
 
         <h3>Resultado do esboço (Free)</h3>
-        <pre id="free-result" class="outline-result"></pre>
+        <pre id="free-result" class="outline-result" aria-live="polite"></pre>
       </section>
 
       <section id="app-premium" class="app-section">
         <h2>Laboratório de Sermões – Plano Premium</h2>
-        <p>
-          Aqui você tem geração <strong>ilimitada</strong> de esboços e estudos
-          bíblicos, usando o motor do Hokmah Expositor integrado ao Gemini.
-        </p>
-
-        <div class="iframe-wrapper" style="margin-top: 1rem;">
-          <iframe
-            src="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app"
-            width="100%"
-            height="900"
-            style="border: none; border-radius: 8px; background: #ffffff;"
-            loading="lazy"
-          ></iframe>
+        <p>Aqui você tem geração <strong>ilimitada</strong> de esboços e estudos bíblicos, usando o motor do Hokmah Expositor integrado ao Gemini.</p>
+        <div class="iframe-wrapper" style="margin-top:1rem;">
+          <iframe src="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app" width="100%" height="900" style="border:none; border-radius:8px; background:#ffffff;" loading="lazy"></iframe>
         </div>
       </section>
     </div>
 
-    <div class="page">
+    <!-- PÁGINA EXTRA -->
+    <div class="page" id="app-page-extra" style="display:none;">
       <div class="card">
         <h2>Conteúdo grátis visível para todos.</h2>
-        <p>
-          Este é o plano gratuito do Hokmah Expositor. Para liberar os recursos
-          Premium (mais geração de esboços, estudos bíblicos aprofundados,
-          citações e ilustrações reformadas, etc.), faça sua assinatura abaixo.
-        </p>
-
-        <p id="upgrade-status"></p>
-
+        <p>Este é o plano gratuito do Hokmah Expositor. Para liberar os recursos Premium (mais geração de esboços, estudos bíblicos aprofundados, citações e ilustrações reformadas, etc.), faça sua assinatura abaixo.</p>
+        <p id="upgrade-status" aria-live="polite"></p>
         <div class="premium-box" id="premium-extra-box">
           <strong>Você está no plano Premium.</strong><br />
-          Agora você tem geração <strong>ilimitada</strong> de esboços e estudos,
-          modelos avançados de estrutura, histórico salvo e outros recursos
-          exclusivos.
+          Agora você tem geração <strong>ilimitada</strong> de esboços e estudos, modelos avançados de estrutura, histórico salvo e outros recursos exclusivos.
         </div>
       </div>
     </div>
 
+    <!-- JS da landing (abas, smooth scroll, Element SDK) -->
     <script>
-      // ====== CONFIGURAÇÕES GERAIS ======
-      const FREE_LIMIT_PER_MONTH = 10; // limite de esboços no plano Free
-      const MAX_FREE_CHARS = 1500; // tamanho máx. do texto exibido no Free
-      const API_URL = "https://SUA-URL-AQUI/sermon"; // TODO: ajustar depois para seu backend
+      document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".feature-tab");
+        const contents = document.querySelectorAll(".tab-content");
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            const targetTab = this.dataset.tab;
+            tabs.forEach((t) => { t.classList.remove("active","border-blue-600","text-blue-600"); t.classList.add("border-transparent","text-gray-500"); });
+            this.classList.add("active","border-blue-600","text-blue-600"); this.classList.remove("border-transparent","text-gray-500");
+            contents.forEach((c) => c.classList.add("hidden"));
+            const targetContent = document.getElementById(targetTab + "-content");
+            if (targetContent) targetContent.classList.remove("hidden");
+          });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (!href || href === "#") return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+
+        if (window.elementSdk) {
+          const defaultConfig = {
+            site_title: "Hokmah Expositor",
+            hero_title: "Menos tempo lutando com o esboço. Mais tempo na Palavra e na oração.",
+            hero_subtitle: "O Hokmah Expositor é um assistente de IA que organiza suas ideias, sugere estruturas e aponta fontes reformadas de referência — sem substituir o seu estudo, sua oração e sua voz no púlpito.",
+            cta_text: "Começar Gratuitamente",
+            background_color: "#111827",
+            primary_color: "#2563eb",
+            text_color: "#ffffff",
+            surface_color: "#ffffff",
+            accent_color: "#10b981"
+          };
+
+          window.elementSdk.init({
+            defaultConfig,
+            onConfigChange: async (config) => {
+              const siteTitleElements = document.querySelectorAll("[data-site-title]");
+              siteTitleElements.forEach((el) => { el.textContent = config.site_title || defaultConfig.site_title; });
+              const heroTitle = document.querySelector("[data-hero-title]");
+              if (heroTitle) heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+              const heroSubtitle = document.querySelector("[data-hero-subtitle]");
+              if (heroSubtitle) heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+              const ctaElements = document.querySelectorAll("[data-cta-text]");
+              ctaElements.forEach((el) => { el.textContent = config.cta_text || defaultConfig.cta_text; });
+
+              const heroSection = document.querySelector("section.bg-gray-900");
+              if (heroSection) heroSection.style.backgroundColor = config.background_color || defaultConfig.background_color;
+              const primaryButtons = document.querySelectorAll(".bg-blue-600");
+              primaryButtons.forEach((btn) => { btn.style.backgroundColor = config.primary_color || defaultConfig.primary_color; });
+              const textElements = document.querySelectorAll(".text-white");
+              textElements.forEach((el) => { if (el.closest("section.bg-gray-900")) el.style.color = config.text_color || defaultConfig.text_color; });
+            },
+            mapToCapabilities: (config) => ({
+              recolorables: [
+                { get: () => config.background_color || defaultConfig.background_color, set: (v) => window.elementSdk.setConfig({ background_color: v }) },
+                { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => window.elementSdk.setConfig({ primary_color: v }) },
+                { get: () => config.text_color || defaultConfig.text_color, set: (v) => window.elementSdk.setConfig({ text_color: v }) }
+              ],
+              borderables: [],
+              fontEditable: undefined,
+              fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) =>
+              new Map([
+                ["site_title", config.site_title || defaultConfig.site_title],
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["cta_text", config.cta_text || defaultConfig.cta_text]
+              ])
+          });
+        }
+      });
+    </script>
+
+    <!-- LÓGICA DE PLANO/USO -->
+    <script>
+      const FREE_LIMIT_PER_MONTH = 10;
+      const MAX_FREE_CHARS = 1500;
+      const API_URL = "https://SUA-URL-AQUI/sermon"; // ajuste depois
 
       function getHokmahPlan() {
         const stored = localStorage.getItem("hokmah_plan"); // definido em sucesso.html
         return stored === "premium" ? "premium" : "free";
       }
-
       function getCurrentMonthKey() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, "0");
-        return `${year}-${month}`;
+        const now = new Date(); const y = now.getFullYear(); const m = String(now.getMonth()+1).padStart(2,"0"); return `${y}-${m}`;
       }
-
       async function callOutlineApi(payload) {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          throw new Error("Erro na API: " + response.status);
-        }
-
-        const data = await response.json();
-        return data.outline || JSON.stringify(data, null, 2);
+        const response = await fetch(API_URL, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload) });
+        if (!response.ok) throw new Error("Erro na API: " + response.status);
+        const data = await response.json(); return data.outline || JSON.stringify(data, null, 2);
       }
 
       function setupUiByPlan() {
@@ -618,35 +657,39 @@
         const hasStartedFree = localStorage.getItem("hokmah_started") === "yes";
 
         const planLabel = document.getElementById("plan-label");
+        const appHeader = document.getElementById("app-header");
         const appFree = document.getElementById("app-free");
         const appPremium = document.getElementById("app-premium");
         const landing = document.getElementById("landing");
         const appContainer = document.getElementById("app-container");
+        const appPageExtra = document.getElementById("app-page-extra");
         const premiumBox = document.getElementById("premium-extra-box");
 
-        if (planLabel) {
-          planLabel.textContent =
-            plan === "premium" ? "Plano: Premium" : "Plano: Free";
-        }
+        if (planLabel) planLabel.textContent = plan === "premium" ? "Plano: Premium" : "Plano: Free";
 
         if (plan === "premium") {
           if (landing) landing.style.display = "none";
+          if (appHeader) appHeader.style.display = "flex";
           if (appContainer) appContainer.style.display = "block";
           if (appPremium) appPremium.style.display = "block";
           if (appFree) appFree.style.display = "none";
+          if (appPageExtra) appPageExtra.style.display = "block";
           if (premiumBox) premiumBox.style.display = "block";
         } else {
           if (premiumBox) premiumBox.style.display = "none";
-
-          if (!hasStartedFree) {
-            if (landing) landing.style.display = "block";
-            if (appContainer) appContainer.style.display = "none";
-          } else {
+          if (hasStartedFree) {
             if (landing) landing.style.display = "none";
+            if (appHeader) appHeader.style.display = "flex";
             if (appContainer) appContainer.style.display = "block";
+            if (appPremium) appPremium.style.display = "none";
+            if (appFree) appFree.style.display = "block";
+            if (appPageExtra) appPageExtra.style.display = "block";
+          } else {
+            if (landing) landing.style.display = "block";
+            if (appHeader) appHeader.style.display = "none";
+            if (appContainer) appContainer.style.display = "none";
+            if (appPageExtra) appPageExtra.style.display = "none";
           }
-          if (appPremium) appPremium.style.display = "none";
-          if (appFree) appFree.style.display = "block";
         }
       }
 
@@ -657,78 +700,41 @@
 
       async function handleGenerateFree() {
         const plan = getHokmahPlan();
-        if (plan !== "free") {
-          alert(
-            "Este botão é para o plano Free. Se você é Premium, use a área Premium."
-          );
-          return;
-        }
+        if (plan !== "free") { alert("Este botão é para o plano Free. Se você é Premium, use a área Premium."); return; }
 
         const monthKey = getCurrentMonthKey();
         const storageKey = "hokmah_free_count_" + monthKey;
         let current = parseInt(localStorage.getItem(storageKey) || "0", 10);
-
         if (current >= FREE_LIMIT_PER_MONTH) {
-          alert(
-            "Você já atingiu o limite de " +
-              FREE_LIMIT_PER_MONTH +
-              " esboços neste mês no plano Free.\n" +
-              "Assine o Plano Premium para ter geração ilimitada."
-          );
+          alert("Você já atingiu o limite de " + FREE_LIMIT_PER_MONTH + " esboços neste mês no plano Free.\nAssine o Plano Premium para ter geração ilimitada.");
           return;
         }
 
-        const titleInput = document.getElementById("free-title");
-        const textInput = document.getElementById("free-text");
-        const methodSelect = document.getElementById("free-method");
-        const emphasisSelect = document.getElementById("free-emphasis");
+        const title = document.getElementById("free-title").value.trim();
+        const text = document.getElementById("free-text").value.trim();
+        const method = document.getElementById("free-method").value;
+        const emphasis = document.getElementById("free-emphasis").value;
         const resultEl = document.getElementById("free-result");
         const button = document.getElementById("free-submit");
 
-        const title = titleInput.value.trim();
-        const text = textInput.value.trim();
+        if (!title || !text) { alert("Preencha pelo menos o título/tema e o texto bíblico principal."); return; }
 
-        if (!title || !text) {
-          alert(
-            "Preencha pelo menos o título/tema e o texto bíblico principal."
-          );
-          return;
-        }
-
-        const payload = {
-          plan: "free",
-          title,
-          biblicalText: text,
-          method: methodSelect.value,
-          emphasis: emphasisSelect.value,
-        };
+        const payload = { plan:"free", title, biblicalText:text, method, emphasis };
 
         button.disabled = true;
         resultEl.textContent = "Gerando seu esboço (plano Free)...";
 
         try {
           let outline = await callOutlineApi(payload);
-
           if (outline.length > MAX_FREE_CHARS) {
-            outline =
-              outline.slice(0, MAX_FREE_CHARS) +
-              "\n\n[Versão resumida no plano Free. Assine o plano Premium para acessar o esboço completo.]";
+            outline = outline.slice(0, MAX_FREE_CHARS) + "\n\n[Versão resumida no plano Free. Assine o plano Premium para acessar o esboço completo.]";
           }
-
           current = current + 1;
           localStorage.setItem(storageKey, String(current));
-
-          resultEl.textContent =
-            "Esboço Free " +
-            current +
-            "/" +
-            FREE_LIMIT_PER_MONTH +
-            " neste mês:\n\n" +
-            outline;
+          resultEl.textContent = "Esboço Free " + current + "/" + FREE_LIMIT_PER_MONTH + " neste mês:\n\n" + outline;
         } catch (err) {
           console.error(err);
-          resultEl.textContent =
-            "Ocorreu um erro ao gerar o esboço Free.\nTente novamente em alguns instantes.";
+          resultEl.textContent = "Ocorreu um erro ao gerar o esboço Free.\nTente novamente em alguns instantes.";
         } finally {
           button.disabled = false;
         }
@@ -736,52 +742,8 @@
 
       async function handleGeneratePremium() {
         const plan = getHokmahPlan();
-        if (plan !== "premium") {
-          alert(
-            "Este botão é para o plano Premium. Assine para liberar o uso ilimitado."
-          );
-          return;
-        }
-
-        const titleInput = document.getElementById("premium-title");
-        const textInput = document.getElementById("premium-text");
-        const methodSelect = document.getElementById("premium-method");
-        const emphasisSelect = document.getElementById("premium-emphasis");
-        const resultEl = document.getElementById("premium-result");
-        const button = document.getElementById("premium-submit");
-
-        const title = titleInput.value.trim();
-        const text = textInput.value.trim();
-
-        if (!title || !text) {
-          alert(
-            "Preencha pelo menos o título/tema e o texto bíblico principal."
-          );
-          return;
-        }
-
-        const payload = {
-          plan: "premium",
-          title,
-          biblicalText: text,
-          method: methodSelect.value,
-          emphasis: emphasisSelect.value,
-        };
-
-        button.disabled = true;
-        resultEl.textContent =
-          "Gerando seu esboço (plano Premium, ilimitado)...";
-
-        try {
-          const outline = await callOutlineApi(payload);
-          resultEl.textContent = outline;
-        } catch (err) {
-          console.error(err);
-          resultEl.textContent =
-            "Ocorreu um erro ao gerar o esboço Premium.\nTente novamente em alguns instantes.";
-        } finally {
-          button.disabled = false;
-        }
+        if (plan !== "premium") { alert("Este botão é para o plano Premium. Assine para liberar o uso ilimitado."); return; }
+        alert("A geração premium é feita dentro do iframe 'Laboratório de Sermões'.");
       }
 
       window.addEventListener("load", setupUiByPlan);
