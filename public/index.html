@@ -5,31 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hokmah Expositor - Assistente IA para Pastores Reformados</title>
 
-    <link rel="canonical" href="https://seu-dominio.app/" />
+    <!-- SEO + Social -->
+    <link rel="canonical" href="https://gen-lang-client-0187133986.web.app/" />
     <meta name="description" content="Gere sermões e estudos com estrutura exegética, ênfase pastoral e citações reformadas. Free e Premium. Experimente grátis." />
     <meta property="og:title" content="Hokmah Expositor — Sermon &amp; Study AI" />
     <meta property="og:description" content="Da ideia ao púlpito com rigor reformado." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://seu-dominio.app/og-cover.jpg" />
-    <meta property="og:url" content="https://seu-dominio.app/" />
+    <meta property="og:image" content="https://gen-lang-client-0187133986.web.app/og-cover.jpg" />
+    <meta property="og:url" content="https://gen-lang-client-0187133986.web.app/" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hokmah Expositor — Sermon & Study AI" />
-    <meta name="twitter:description" content="Da ideia ao púlpito com rigor reformado." />
 
+    <!-- Tailwind -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="/_sdk/element_sdk.js" defer></script>
-    <script src="/_sdk/data_sdk.js" type="text/javascript" defer></script>
+    <!-- Element SDK (opcional para edição visual) -->
+    <script src="/_sdk/element_sdk.js"></script>
 
+    <!-- Schema.org -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Hokmah Expositor",
-        "applicationCategory": "ReligionApplication",
+        "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
-        "offers": { "@type": "Offer", "price": "24.90", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" },
+        "offers": { "@type": "Offer", "price": "24.90", "priceCurrency": "BRL" },
         "description": "Assistente de IA para gerar e refinar sermões, estudos e séries com teologia reformada."
       }
     </script>
@@ -41,7 +42,7 @@
       }
       .mask-radial { mask-image: radial-gradient(ellipse at center, black 30%, transparent 100%); }
 
-      /* ===== CSS DO APP ===== */
+      /* ===== CSS DO APP (mantido, com prefixos onde necessário) ===== */
       body {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         margin: 0; padding: 0;
@@ -53,16 +54,26 @@
       header.app-header h1 { margin:0; font-size:1.3rem; }
       .header-right { display:flex; align-items:center; gap:.75rem; }
       .plan-badge { padding:.4rem .9rem; border-radius:999px; border:1px solid #ddd; background:#fafafa; font-size:.9rem; }
-      .page { max-width:900px; margin:2.5rem auto; padding:0 1rem; }
-      .app-section { max-width:900px; margin:1.5rem auto; padding:1.5rem; background:#fff; border-radius:12px; border:1px solid #e0e0e0; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+      .page { max-width: 900px; margin: 2.5rem auto; padding: 0 1rem; }
+      .app-section {
+        max-width: 900px; margin: 1.5rem auto; padding: 1.5rem; background:#fff;
+        border-radius:12px; border:1px solid #e0e0e0; box-shadow:0 2px 8px rgba(0,0,0,.05);
+      }
       .app-section .hint { font-size:.9rem; color:#555; margin-top:1rem; }
-      .app-section button { border:none; border-radius:8px; padding:.7rem 1.2rem; font-size:.95rem; font-weight:600; cursor:pointer; background:#2e7d32; color:#fff; transition:background .15s ease; }
+      .app-section button {
+        border:none; border-radius:8px; padding:.7rem 1.2rem; font-size:.95rem; font-weight:600; cursor:pointer;
+        background:#2e7d32; color:#fff; transition:background .15s ease;
+      }
       .app-section button:hover { background:#1b5e20; }
-      #app-free button { background:#3949ab; } #app-free button:hover{ background:#283593; }
+      #app-free button { background:#3949ab; } #app-free button:hover { background:#283593; }
       .card { background:#fff; border-radius:12px; padding:2rem; box-shadow:0 2px 10px rgba(0,0,0,.06); border:1px solid #e0e0e0; }
-      .app-section h2,.page h2 { margin-top:0; font-size:1.4rem; font-weight:600; }
-      .app-section p,.page p { line-height:1.5; color:#333; }
-      #upgrade-btn { display:inline-block; border:none; border-radius:999px; padding:.75rem 1.8rem; font-size:1rem; font-weight:600; cursor:pointer; color:#fff; background:#1e88e5; box-shadow:0 2px 6px rgba(30,136,229,.35); transition:background .15s, transform .1s, box-shadow .1s; }
+      .app-section h2, .page h2 { margin-top:0; font-size:1.4rem; font-weight:600; }
+      .app-section p, .page p { line-height:1.5; color:#333; }
+      #upgrade-btn {
+        display:inline-block; border:none; border-radius:999px; padding:.75rem 1.8rem; font-size:1rem; font-weight:600; cursor:pointer;
+        color:#fff; background:#1e88e5; box-shadow:0 2px 6px rgba(30,136,229,.35);
+        transition:background .15s ease, transform .1s ease, box-shadow .1s ease;
+      }
       #upgrade-btn:hover { background:#1565c0; transform:translateY(-1px); box-shadow:0 4px 10px rgba(30,136,229,.4); }
       #upgrade-btn:disabled { background:#b0bec5; box-shadow:none; cursor:default; transform:none; }
       #upgrade-status { margin-top:.75rem; font-size:.9rem; color:#555; }
@@ -71,20 +82,28 @@
       .premium-box { display:none; color:#1b5e20; font-size:.95rem; }
       .form-group { margin-bottom:.9rem; }
       .form-group label { display:block; font-size:.9rem; margin-bottom:.25rem; color:#333; }
-      .form-group input,.form-group select { width:100%; padding:.45rem .5rem; border-radius:6px; border:1px solid #ccc; font:inherit; box-sizing:border-box; }
-      .outline-result { background:#111827; color:#e5e7eb; padding:1rem; border-radius:8px; max-height:400px; overflow:auto; white-space:pre-wrap; font-size:.9rem; }
+      .form-group input, .form-group select {
+        width:100%; padding:.45rem .5rem; border-radius:6px; border:1px solid #ccc; font:inherit; box-sizing:border-box;
+      }
+      .outline-result {
+        background:#111827; color:#e5e7eb; padding:1rem; border-radius:8px; max-height:400px; overflow:auto; white-space:pre-wrap; font-size:.9rem;
+      }
       @view-transition { navigation: auto; }
     </style>
-  </head>
 
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  </head>
   <body class="bg-white">
-    <!-- LANDING (aparece para visitante e free antes do "Começar") -->
-    <div id="landing" style="display:none;">
+
+    <!-- ====== LANDING ====== -->
+    <div id="landing" style="display: none;">
       <!-- Header -->
       <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
             <span class="font-semibold text-gray-900">Hokmah Expositor</span>
           </div>
           <nav class="hidden md:flex items-center gap-6 text-sm">
@@ -102,28 +121,37 @@
       <!-- Hero -->
       <section class="relative bg-gray-900 text-white py-28 md:py-36 overflow-hidden">
         <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
-          <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500 text-xs font-semibold uppercase tracking-wider mb-4">IA feita por pastores reformados, para pastores reformados</span>
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">Menos tempo lutando com o esboço. <br>Mais tempo na Palavra e na oração.</h1>
-          <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">O Hokmah Expositor é um assistente de IA que organiza suas ideias, sugere estruturas e aponta fontes reformadas de referência — sem substituir o seu estudo, sua oração e sua voz no púlpito.</p>
+          <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500 text-xs font-semibold uppercase tracking-wider mb-4">
+            IA feita por pastores reformados, para pastores reformados
+          </span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Menos tempo lutando com o esboço. <br />Mais tempo na Palavra e na oração.
+          </h1>
+          <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+            O Hokmah Expositor é um assistente de IA que organiza suas ideias, sugere estruturas e aponta fontes reformadas de referência — sem substituir o seu estudo, sua oração e sua voz no púlpito.
+          </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 mb-3">
             <button type="button" onclick="startFree()" data-analytics="hero_primary" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-colors">
               Começar Gratuitamente
               <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </button>
-            <a href="#pricing" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium border border-gray-500 bg-transparent hover:bg-gray-800 transition-colors">Ver planos e recursos</a>
+            <a href="#pricing" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium border border-gray-500 bg-transparent hover:bg-gray-800 transition-colors">
+              Ver planos e recursos
+            </a>
           </div>
           <p class="text-sm text-gray-400">Plano Free sem cartão · Cancele o Premium quando quiser</p>
         </div>
         <div class="absolute inset-0 bg-grid-gray-700/10 opacity-50 mask-radial"></div>
       </section>
 
-      <!-- Features Tabs -->
+      <!-- Features (abas) -->
       <section id="features" class="py-20 bg-gray-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Recursos para cada momento do seu ministério</h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Ferramentas específicas para diferentes tipos de pregação e ensino</p>
           </div>
+
           <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="border-b border-gray-200">
               <nav class="flex overflow-x-auto">
@@ -151,7 +179,7 @@
             </div>
 
             <div class="p-8">
-              <!-- Sermon Tab -->
+              <!-- Tab: Sermão -->
               <div id="sermon-content" class="tab-content">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -179,7 +207,7 @@
                 </div>
               </div>
 
-              <!-- Series Tab -->
+              <!-- Tab: Série -->
               <div id="series-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -210,7 +238,7 @@
                 </div>
               </div>
 
-              <!-- Study Tab -->
+              <!-- Tab: Estudo -->
               <div id="study-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -240,7 +268,7 @@
                 </div>
               </div>
 
-              <!-- Special Tab -->
+              <!-- Tab: Ocasiões -->
               <div id="special-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -271,7 +299,7 @@
                 </div>
               </div>
 
-              <!-- Refine Tab -->
+              <!-- Tab: Refinar -->
               <div id="refine-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -280,7 +308,7 @@
                     <ul class="space-y-3">
                       <li>Organiza título, proposição e <strong>2–4 divisões</strong></li>
                       <li><strong>Argumentação por divisão</strong> com textos base + aprofundamento</li>
-                      <li><strong>Citação</strong> e <strong>ilustração</strong> alinhadas ao tema (regenere por bloco)</li>
+                      <li><strong>Citação</strong> e <strong>ilustração</strong> alinhadas ao tema</li>
                       <li><strong>Análise teológica</strong> com verificação confessional reformada</li>
                       <li><strong>Sugestões de clareza</strong> para melhor comunicação pastoral</li>
                     </ul>
@@ -300,19 +328,20 @@
                   </div>
                 </div>
               </div>
-              <!-- /tabs -->
-            </div>
-          </div>
+
+            </div> <!-- /p-8 -->
+          </div> <!-- /card -->
         </div>
       </section>
 
-      <!-- Authority -->
+      <!-- Autoridade Reformada -->
       <section id="authority" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Fundamentado na Teologia Reformada</h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Nossa IA foi treinada com as melhores fontes da tradição reformada</p>
           </div>
+
           <div class="grid md:grid-cols-3 gap-8 mb-12">
             <div class="text-center">
               <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -336,6 +365,7 @@
               <p class="text-gray-600">Prioriza o método histórico-gramatical e a analogia da fé na interpretação bíblica</p>
             </div>
           </div>
+
           <div class="bg-gray-50 rounded-2xl p-8">
             <div class="text-center mb-8">
               <h3 class="text-2xl font-bold text-gray-900 mb-4">Desenvolvido por Pastores Reformados</h3>
@@ -343,7 +373,9 @@
             </div>
             <div class="flex justify-center">
               <div class="bg-white rounded-lg p-6 shadow-sm max-w-md">
-                <blockquote class="text-gray-700 italic mb-4">"A pregação não é sobre eloquência humana, mas sobre a fidelidade à Palavra de Deus. O Hokmah Expositor nos ajuda a ser mais fiéis ao texto e mais claros na comunicação."</blockquote>
+                <blockquote class="text-gray-700 italic mb-4">
+                  "A pregação não é sobre eloquência humana, mas sobre a fidelidade à Palavra de Deus. O Hokmah Expositor nos ajuda a ser mais fiéis ao texto e mais claros na comunicação."
+                </blockquote>
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
                   <div>
@@ -354,6 +386,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -364,6 +397,7 @@
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Planos para Todo Ministério</h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Comece gratuitamente e evolua conforme suas necessidades</p>
           </div>
+
           <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <!-- Free -->
             <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
@@ -373,11 +407,12 @@
                 <p class="text-gray-600">Para começar</p>
               </div>
               <ul class="space-y-4 mb-8">
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">10 gerações por mês</span></li>
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Estruturas básicas</span></li>
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Suporte por email</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Pré-visualização + estruturas básicas</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Suporte por e-mail</span></li>
               </ul>
-              <button type="button" onclick="startFree()" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 transition-colors">Começar Gratuitamente</button>
+              <button type="button" id="free-submit" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium border border-gray-300 text-gray-700 bg-white transition-colors" disabled title="Em breve">
+                Gerador Free indisponível no momento
+              </button>
             </div>
 
             <!-- Premium -->
@@ -393,40 +428,44 @@
               <ul class="space-y-4 mb-8">
                 <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Gerações <strong>ilimitadas</strong> (sermões e estudos)</span></li>
                 <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700"><strong>Refinar Sermão</strong> com citação + ilustração por divisão</span></li>
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700"><strong>Planejar Série</strong> (títulos, textos, divisões e EBD/PG opcional)</span></li>
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Referências cruzadas + termo grego/hebraico (opcional)</span></li>
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Exportações: PDF, DOCX e Markdown</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700"><strong>Planejar Série</strong> (títulos, textos, divisões e EBD/PG opcional)</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Referências cruzadas + termo grego/hebraico (opcional)</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Exportações: PDF, DOCX e Markdown</span></li>
               </ul>
-              <p class="text-xs text-gray-500 mt-2 mb-6">Algumas versões bíblicas exigem licença. Oferecemos alternativas de domínio público/licenciadas.</p>
-              <a href="#" onclick="document.getElementById('upgrade-form').submit(); return false;" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Assinar Premium</a>
+              <form id="upgrade-form" action="https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session" method="POST">
+                <button id="upgrade-btn" type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Assinar Premium</button>
+              </form>
+              <p class="text-xs text-gray-500 mt-3">Algumas versões bíblicas exigem licença. Oferecemos alternativas de domínio público/licenciadas.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Lead magnet -->
-      <section id="signup" class="py-16 bg-white border-t border-gray-200">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Receba um esboço modelo por semana</h3>
-          <p class="text-gray-600 mb-6">Dicas de homilética reformada + exemplos prontos (PT/EN). Cancele quando quiser.</p>
-          <form class="flex flex-col sm:flex-row gap-3 justify-center" action="https://seu-backend/subscribe" method="post">
-            <input type="email" name="email" required class="w-full sm:w-96 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="seu@email.com" />
-            <button type="submit" data-analytics="signup_submit" class="px-6 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700">Quero receber</button>
-            <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off" />
-          </form>
-          <p class="text-xs text-gray-500 mt-3">Sem spam. <a href="/privacidade" class="underline">Política de Privacidade</a>.</p>
-        </div>
-      </section>
+      <!-- (Newsletter ocultada)
+      <section id="signup" class="py-16 bg-white border-t border-gray-200"> ... </section>
+      -->
 
       <!-- FAQ -->
       <section class="py-16 bg-gray-50">
         <div class="max-w-4xl mx-auto px-4">
           <h3 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">Perguntas Frequentes</h3>
           <div class="divide-y divide-gray-200">
-            <details class="py-4" open><summary class="font-semibold text-gray-900 cursor-pointer">O app substitui meu estudo?</summary><p class="mt-2 text-gray-600">Não. Ele organiza e acelera seu preparo; você continua responsável pela exegese e aplicação pastoral.</p></details>
-            <details class="py-4"><summary class="font-semibold text-gray-900 cursor-pointer">Posso escolher a versão bíblica?</summary><p class="mt-2 text-gray-600">Sim. Respeitamos licenças e oferecemos versões alternativas quando necessário.</p></details>
-            <details class="py-4"><summary class="font-semibold text-gray-900 cursor-pointer">Qual o limite do plano Free?</summary><p class="mt-2 text-gray-600">10 gerações/mês com pré-visualização e exportação básica.</p></details>
-            <details class="py-4"><summary class="font-semibold text-gray-900 cursor-pointer">Posso cancelar quando quiser?</summary><p class="mt-2 text-gray-600">Sim. Pagamento via Stripe e cancelamento a qualquer momento.</p></details>
+            <details class="py-4" open>
+              <summary class="font-semibold text-gray-900 cursor-pointer">O app substitui meu estudo?</summary>
+              <p class="mt-2 text-gray-600">Não. Ele organiza e acelera seu preparo; você continua responsável pela exegese e aplicação pastoral.</p>
+            </details>
+            <details class="py-4">
+              <summary class="font-semibold text-gray-900 cursor-pointer">Posso escolher a versão bíblica?</summary>
+              <p class="mt-2 text-gray-600">Sim. Respeitamos licenças e oferecemos versões alternativas quando necessário.</p>
+            </details>
+            <details class="py-4">
+              <summary class="font-semibold text-gray-900 cursor-pointer">Qual o limite do plano Free?</summary>
+              <p class="mt-2 text-gray-600">Pré-visualização e estruturas básicas. O gerador completo está no Premium.</p>
+            </details>
+            <details class="py-4">
+              <summary class="font-semibold text-gray-900 cursor-pointer">Posso cancelar quando quiser?</summary>
+              <p class="mt-2 text-gray-600">Sim. Pagamento via Stripe e cancelamento a qualquer momento.</p>
+            </details>
           </div>
         </div>
       </section>
@@ -445,8 +484,8 @@
             <div>
               <h4 class="font-semibold mb-4">Produto</h4>
               <ul class="space-y-2 text-sm text-gray-400">
-                <li><a href="#" class="hover:text-white transition-colors">Recursos</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">Preços</a></li>
+                <li><a href="#features" class="hover:text-white transition-colors">Recursos</a></li>
+                <li><a href="#pricing" class="hover:text-white transition-colors">Preços</a></li>
                 <li><a href="#" class="hover:text-white transition-colors">API</a></li>
               </ul>
             </div>
@@ -463,7 +502,7 @@
               <ul class="space-y-2 text-sm text-gray-400">
                 <li><a href="#" class="hover:text-white transition-colors">Sobre</a></li>
                 <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">Privacidade</a></li>
+                <!-- <li><a href="/privacidade" class="hover:text-white transition-colors">Privacidade</a></li> -->
               </ul>
             </div>
           </div>
@@ -472,35 +511,37 @@
           </div>
         </div>
       </footer>
-    </div>
-    <!-- /LANDING -->
+    </div> <!-- /landing -->
 
-    <!-- HEADER DO APP (checkout + rótulo de plano) -->
+    <!-- ====== APP HEADER (quando sair da landing) ====== -->
     <header class="app-header" id="app-header" style="display:none;">
       <h1>Hokmah Expositor</h1>
       <div class="header-right">
         <div id="plan-label" class="plan-badge">Plano: Free</div>
-        <form id="upgrade-form" action="/create-checkout-session" method="POST" style="margin:0;">
+        <form id="upgrade-form-2" action="https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session" method="POST" style="margin:0;">
           <button id="upgrade-btn" type="submit">Assinar Premium</button>
         </form>
       </div>
     </header>
 
-    <!-- APP CONTAINER -->
+    <!-- ====== APP CONTAINER ====== -->
     <div id="app-container" style="display:none;">
-      <section id="app-free" class="app-section">
+      <!-- Free (desabilitado) -->
+      <section id="app-free" class="app-section" style="display:block;">
         <h2>Gerador de Esboços – Plano Free</h2>
-        <p>No plano gratuito você pode gerar até <strong>10 esboços por mês</strong> neste navegador. Use para testar o Hokmah Expositor.</p>
+        <p>O gerador Free online está temporariamente desativado. Use o Laboratório Premium abaixo para acesso completo.</p>
 
         <form id="free-form" onsubmit="return false;">
           <div class="form-group">
             <label for="free-title">Título / Tema do sermão</label>
             <input type="text" id="free-title" placeholder="Ex.: A graça que nos sustenta" />
           </div>
+
           <div class="form-group">
             <label for="free-text">Texto bíblico principal</label>
             <input type="text" id="free-text" placeholder="Ex.: 2 Coríntios 12:7-10" />
           </div>
+
           <div class="form-group">
             <label for="free-method">Método de pregação</label>
             <select id="free-method">
@@ -510,6 +551,7 @@
               <option value="textual">Textual</option>
             </select>
           </div>
+
           <div class="form-group">
             <label for="free-emphasis">Ênfase pastoral</label>
             <select id="free-emphasis">
@@ -521,39 +563,46 @@
               <option value="apologetica">Apologética</option>
             </select>
           </div>
-          <button type="button" id="free-submit" onclick="handleGenerateFree();">Gerar esboço (Free – conta para o limite mensal)</button>
+
+          <button type="button" id="free-submit-app" onclick="handleGenerateFree();" disabled title="Em breve">
+            Gerador Free indisponível no momento
+          </button>
         </form>
 
-        <p class="hint">Dica: para geração <strong>ilimitada</strong> e recursos avançados, assine o plano Premium.</p>
-
-        <h3>Resultado do esboço (Free)</h3>
-        <pre id="free-result" class="outline-result" aria-live="polite"></pre>
+        <h3 class="mt-4">Resultado do esboço (Free)</h3>
+        <pre id="free-result" class="outline-result"></pre>
       </section>
 
+      <!-- Premium -->
       <section id="app-premium" class="app-section">
         <h2>Laboratório de Sermões – Plano Premium</h2>
-        <p>Aqui você tem geração <strong>ilimitada</strong> de esboços e estudos bíblicos, usando o motor do Hokmah Expositor integrado ao Gemini.</p>
+        <p>Geração <strong>ilimitada</strong> de esboços e estudos bíblicos, usando o motor do Hokmah Expositor integrado ao Gemini.</p>
         <div class="iframe-wrapper" style="margin-top:1rem;">
-          <iframe src="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app" width="100%" height="900" style="border:none; border-radius:8px; background:#ffffff;" loading="lazy"></iframe>
+          <iframe
+            src="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app"
+            width="100%" height="900"
+            style="border:none; border-radius:8px; background:#ffffff;" loading="lazy">
+          </iframe>
         </div>
       </section>
     </div>
 
-    <!-- PÁGINA EXTRA -->
+    <!-- Mensagem extra -->
     <div class="page" id="app-page-extra" style="display:none;">
       <div class="card">
         <h2>Conteúdo grátis visível para todos.</h2>
         <p>Este é o plano gratuito do Hokmah Expositor. Para liberar os recursos Premium (mais geração de esboços, estudos bíblicos aprofundados, citações e ilustrações reformadas, etc.), faça sua assinatura abaixo.</p>
-        <p id="upgrade-status" aria-live="polite"></p>
+        <p id="upgrade-status"></p>
         <div class="premium-box" id="premium-extra-box">
           <strong>Você está no plano Premium.</strong><br />
-          Agora você tem geração <strong>ilimitada</strong> de esboços e estudos, modelos avançados de estrutura, histórico salvo e outros recursos exclusivos.
+          Gere <strong>ilimitado</strong>, use modelos avançados, histórico salvo e mais.
         </div>
       </div>
     </div>
 
-    <!-- JS da landing (abas, smooth scroll, Element SDK) -->
+    <!-- ====== SCRIPTS ====== -->
     <script>
+      // Tabs e rolagem suave
       document.addEventListener("DOMContentLoaded", function () {
         const tabs = document.querySelectorAll(".feature-tab");
         const contents = document.querySelectorAll(".tab-content");
@@ -569,16 +618,14 @@
           });
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            const href = this.getAttribute("href");
-            if (!href || href === "#") return;
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        document.querySelectorAll('a[href^="#"]').forEach((a) => {
+          a.addEventListener("click", function (e) {
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
           });
         });
 
+        // Element SDK (opcional)
         if (window.elementSdk) {
           const defaultConfig = {
             site_title: "Hokmah Expositor",
@@ -596,18 +643,18 @@
             defaultConfig,
             onConfigChange: async (config) => {
               const siteTitleElements = document.querySelectorAll("[data-site-title]");
-              siteTitleElements.forEach((el) => { el.textContent = config.site_title || defaultConfig.site_title; });
+              siteTitleElements.forEach((el) => el.textContent = config.site_title || defaultConfig.site_title);
               const heroTitle = document.querySelector("[data-hero-title]");
               if (heroTitle) heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
               const heroSubtitle = document.querySelector("[data-hero-subtitle]");
               if (heroSubtitle) heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
               const ctaElements = document.querySelectorAll("[data-cta-text]");
-              ctaElements.forEach((el) => { el.textContent = config.cta_text || defaultConfig.cta_text; });
+              ctaElements.forEach((el) => el.textContent = config.cta_text || defaultConfig.cta_text);
 
               const heroSection = document.querySelector("section.bg-gray-900");
               if (heroSection) heroSection.style.backgroundColor = config.background_color || defaultConfig.background_color;
               const primaryButtons = document.querySelectorAll(".bg-blue-600");
-              primaryButtons.forEach((btn) => { btn.style.backgroundColor = config.primary_color || defaultConfig.primary_color; });
+              primaryButtons.forEach((btn) => btn.style.backgroundColor = config.primary_color || defaultConfig.primary_color);
               const textElements = document.querySelectorAll(".text-white");
               textElements.forEach((el) => { if (el.closest("section.bg-gray-900")) el.style.color = config.text_color || defaultConfig.text_color; });
             },
@@ -631,25 +678,27 @@
           });
         }
       });
-    </script>
 
-    <!-- LÓGICA DE PLANO/USO -->
-    <script>
+      // ===== CONFIG FREE (desabilitado) =====
       const FREE_LIMIT_PER_MONTH = 10;
       const MAX_FREE_CHARS = 1500;
-      const API_URL = "https://SUA-URL-AQUI/sermon"; // ajuste depois
+      const API_URL = null; // quando houver backend público para o Free, troque para a sua URL
 
       function getHokmahPlan() {
-        const stored = localStorage.getItem("hokmah_plan"); // definido em sucesso.html
+        const stored = localStorage.getItem("hokmah_plan");
         return stored === "premium" ? "premium" : "free";
       }
       function getCurrentMonthKey() {
-        const now = new Date(); const y = now.getFullYear(); const m = String(now.getMonth()+1).padStart(2,"0"); return `${y}-${m}`;
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
       }
+
       async function callOutlineApi(payload) {
+        if (!API_URL) throw new Error("FREE_API_DISABLED");
         const response = await fetch(API_URL, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload) });
         if (!response.ok) throw new Error("Erro na API: " + response.status);
-        const data = await response.json(); return data.outline || JSON.stringify(data, null, 2);
+        const data = await response.json();
+        return data.outline || JSON.stringify(data, null, 2);
       }
 
       function setupUiByPlan() {
@@ -672,7 +721,7 @@
           if (appHeader) appHeader.style.display = "flex";
           if (appContainer) appContainer.style.display = "block";
           if (appPremium) appPremium.style.display = "block";
-          if (appFree) appFree.style.display = "none";
+          if (appFree) appFree.style.display = "block"; // deixa visível, mas com botão off
           if (appPageExtra) appPageExtra.style.display = "block";
           if (premiumBox) premiumBox.style.display = "block";
         } else {
@@ -681,7 +730,7 @@
             if (landing) landing.style.display = "none";
             if (appHeader) appHeader.style.display = "flex";
             if (appContainer) appContainer.style.display = "block";
-            if (appPremium) appPremium.style.display = "none";
+            if (appPremium) appPremium.style.display = "block"; // mostra laboratório como vitrine
             if (appFree) appFree.style.display = "block";
             if (appPageExtra) appPageExtra.style.display = "block";
           } else {
@@ -699,14 +748,23 @@
       }
 
       async function handleGenerateFree() {
+        // Guard: FREE off
+        if (!API_URL) {
+          alert("O gerador Free online ainda não está disponível. Use o Laboratório (Premium) no iframe ou volte em breve.");
+          return;
+        }
+
         const plan = getHokmahPlan();
-        if (plan !== "free") { alert("Este botão é para o plano Free. Se você é Premium, use a área Premium."); return; }
+        if (plan !== "free") {
+          alert("Este botão é para o plano Free. Se você é Premium, use a área Premium.");
+          return;
+        }
 
         const monthKey = getCurrentMonthKey();
         const storageKey = "hokmah_free_count_" + monthKey;
         let current = parseInt(localStorage.getItem(storageKey) || "0", 10);
         if (current >= FREE_LIMIT_PER_MONTH) {
-          alert("Você já atingiu o limite de " + FREE_LIMIT_PER_MONTH + " esboços neste mês no plano Free.\nAssine o Plano Premium para ter geração ilimitada.");
+          alert("Você atingiu o limite de " + FREE_LIMIT_PER_MONTH + " esboços neste mês no Free. Assine o Premium para gerar ilimitado.");
           return;
         }
 
@@ -715,19 +773,19 @@
         const method = document.getElementById("free-method").value;
         const emphasis = document.getElementById("free-emphasis").value;
         const resultEl = document.getElementById("free-result");
-        const button = document.getElementById("free-submit");
 
-        if (!title || !text) { alert("Preencha pelo menos o título/tema e o texto bíblico principal."); return; }
+        if (!title || !text) {
+          alert("Preencha pelo menos o título/tema e o texto bíblico principal.");
+          return;
+        }
 
         const payload = { plan:"free", title, biblicalText:text, method, emphasis };
-
-        button.disabled = true;
         resultEl.textContent = "Gerando seu esboço (plano Free)...";
 
         try {
           let outline = await callOutlineApi(payload);
           if (outline.length > MAX_FREE_CHARS) {
-            outline = outline.slice(0, MAX_FREE_CHARS) + "\n\n[Versão resumida no plano Free. Assine o plano Premium para acessar o esboço completo.]";
+            outline = outline.slice(0, MAX_FREE_CHARS) + "\n\n[Versão resumida no plano Free. Assine o Premium para o esboço completo.]";
           }
           current = current + 1;
           localStorage.setItem(storageKey, String(current));
@@ -735,18 +793,45 @@
         } catch (err) {
           console.error(err);
           resultEl.textContent = "Ocorreu um erro ao gerar o esboço Free.\nTente novamente em alguns instantes.";
-        } finally {
-          button.disabled = false;
         }
       }
 
-      async function handleGeneratePremium() {
-        const plan = getHokmahPlan();
-        if (plan !== "premium") { alert("Este botão é para o plano Premium. Assine para liberar o uso ilimitado."); return; }
-        alert("A geração premium é feita dentro do iframe 'Laboratório de Sermões'.");
-      }
+      window.addEventListener("load", () => {
+        // Garante botão Free desabilitado na landing também
+        const freeBtnLanding = document.getElementById("free-submit");
+        if (freeBtnLanding) {
+          freeBtnLanding.disabled = true;
+          freeBtnLanding.title = "Em breve";
+          freeBtnLanding.textContent = "Gerador Free indisponível no momento";
+        }
+        setupUiByPlan();
+      });
+    </script>
 
-      window.addEventListener("load", setupUiByPlan);
+    <!-- Cloudflare (opcional/automático do host) -->
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML = "window.__CF$cv$params={r:'99eea17146266d76',t:'MTc2MzIwODQ3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1; a.width = 1;
+          a.style.position = "absolute"; a.style.top = 0; a.style.left = 0; a.style.border = "none"; a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener) document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) { e(b); "loading" !== document.readyState && ((document.onreadystatechange = e), c()); };
+          }
+        }
+      })();
     </script>
   </body>
 </html>
