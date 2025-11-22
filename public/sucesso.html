@@ -2,154 +2,142 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
     <title>Pagamento confirmado | Hokmah Expositor</title>
-    <meta
-      name="description"
-      content="Assinatura Premium ativa com sucesso. Redirecionando para o app."
-    />
-    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-      :root {
-        --bg: #0b1220;
-        --card: #0f172a;
-        --text: #e5e7eb;
-        --muted: #a3a3a3;
-        --brand: #2563eb;
-        --ok: #10b981;
-      }
-      * { box-sizing: border-box; }
       body {
         margin: 0;
-        min-height: 100svh;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(1200px 600px at 50% -10%, #1e293b 10%, transparent 60%),
-          linear-gradient(180deg, #0b1220 0%, #0b1220 100%);
-        display: grid;
-        place-items: center;
-        padding: 24px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #0f172a, #020617);
+        color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .card {
-        width: min(720px, 100%);
-        background: color-mix(in oklab, var(--card) 92%, transparent);
-        border: 1px solid #1f2937;
-        border-radius: 16px;
-        padding: 28px;
-        box-shadow: 0 6px 30px rgba(0,0,0,.35);
+        background: rgba(15, 23, 42, 0.95);
+        border-radius: 18px;
+        padding: 32px 28px;
+        max-width: 520px;
+        width: 100%;
+        box-shadow: 0 24px 80px rgba(15, 23, 42, 0.8);
       }
-      .title {
-        margin: 0 0 8px;
-        font-size: clamp(20px, 2.6vw, 28px);
-        font-weight: 800;
-        letter-spacing: .2px;
+      h1 {
+        margin: 0 0 4px;
+        font-size: 1.7rem;
+        color: #a5b4fc;
       }
-      .ok {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--ok);
-        font-weight: 700;
-        margin-bottom: 4px;
+      .subtitle {
+        margin: 0 0 24px;
+        font-size: 0.95rem;
+        color: #e5e7eb;
       }
-      .ok svg { flex: 0 0 22px; }
-      p { margin: 8px 0; color: var(--muted); line-height: 1.55; }
-      .actions {
-        display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap;
+      .status-line {
+        margin-top: 12px;
+        font-size: 0.9rem;
       }
-      .btn {
-        appearance: none;
-        border: 0;
+      .status-ok {
+        color: #4ade80;
+        font-weight: 600;
+      }
+      .buttons {
+        margin-top: 28px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn-primary,
+      .btn-ghost {
         border-radius: 999px;
-        padding: 12px 18px;
-        font-weight: 700;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: 600;
         cursor: pointer;
-        transition: transform .08s ease, box-shadow .12s ease, opacity .2s ease;
+        border: none;
       }
       .btn-primary {
-        background: var(--brand);
-        color: #fff;
-        box-shadow: 0 8px 24px rgba(37, 99, 235, .35);
+        background: linear-gradient(135deg, #4f46e5, #22c55e);
+        color: white;
       }
-      .btn-primary:hover { transform: translateY(-1px); }
-      .btn-outline {
+      .btn-ghost {
         background: transparent;
-        color: var(--text);
-        border: 1px solid #334155;
+        color: #e5e7eb;
+        border: 1px solid rgba(148, 163, 184, 0.6);
       }
-      .note { font-size: 12px; color: #9ca3af; margin-top: 10px; }
-      .kvd {
-        display: grid; grid-template-columns: 140px 1fr; gap: 6px 10px;
-        margin-top: 14px; font-size: 13px;
+      .small {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        margin-top: 12px;
       }
-      .kvd div:nth-child(odd){ color:#9ca3af; }
-      .hr { height: 1px; background: #1f2937; margin: 16px 0; border-radius: 1px; }
     </style>
     <script>
-      // --- Pós-checkout: ativa Premium no dispositivo do usuário ---
-      (function () {
-        try {
-          // marca o plano e abre o app ao voltar para o index.html
-          localStorage.setItem("hokmah_plan", "premium");
-          localStorage.setItem("hokmah_started", "yes");
-          localStorage.setItem("hokmah_premium_activated_at", new Date().toISOString());
+      // >>>>>>> AQUI: URL DO APP NOVO (Cloud Run) <<<<<<<
+      const APP_URL =
+        "https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app/";
 
-          // (opcional) pega o session_id para debug
-          const params = new URLSearchParams(location.search);
-          const sessionId = params.get("session_id");
-          if (sessionId) {
-            console.log("[Stripe] session_id:", sessionId);
-            // se quiser, persista para suporte:
-            localStorage.setItem("hokmah_last_stripe_session_id", sessionId);
+      window.addEventListener("DOMContentLoaded", () => {
+        const btn = document.getElementById("go-to-app");
+        const redirectText = document.getElementById("redirect-text");
+
+        let seconds = 3;
+        redirectText.textContent = `em até ${seconds} segundos...`;
+
+        const timer = setInterval(() => {
+          seconds -= 1;
+          if (seconds <= 0) {
+            clearInterval(timer);
           }
+          redirectText.textContent = `em até ${Math.max(
+            seconds,
+            0
+          )} segundos...`;
+        }, 1000);
 
-          // redireciona automaticamente em 3 segundos
-          window.__hokmah_redirectTimer = setTimeout(() => {
-            // ajuste aqui se você hospeda o index em outro domínio:
-            // ex.: location.href = "https://gen-lang-client-0187133986.web.app/";
-            location.href = "/";
-          }, 3000);
-        } catch (e) {
-          console.error("Falha ao gravar estado Premium:", e);
-        }
-      })();
+        // redirecionamento automático
+        setTimeout(() => {
+          window.location.href = APP_URL;
+        }, 3000);
 
-      function goNow() {
-        try { clearTimeout(window.__hokmah_redirectTimer); } catch (e) {}
-        // ajuste aqui se necessário para seu domínio de produção
-        location.href = "/";
-      }
+        // botão "Ir para o app agora"
+        btn.addEventListener("click", () => {
+          window.location.href = APP_URL;
+        });
+      });
     </script>
   </head>
   <body>
-    <main class="card" role="main" aria-live="polite">
-      <div class="ok">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-          <path d="M22 4 12 14.01l-3-3" />
-        </svg>
-        Pagamento confirmado
+    <main class="card">
+      <h1>Pagamento confirmado</h1>
+      <p class="subtitle">
+        Sua assinatura <strong>Premium</strong> foi ativada. Obrigado por apoiar
+        o Hokmah Expositor – que Deus use esse recurso para abençoar muitos
+        púlpitos.
+      </p>
+
+      <div class="status-line">
+        Status: <span class="status-ok">Premium ativo ✅</span>
       </div>
-      <h1 class="title">Sua assinatura Premium foi ativada</h1>
-      <p>Obrigado! O acesso Premium já está liberado neste dispositivo. Vamos te levar ao laboratório de sermões.</p>
-
-      <div class="hr"></div>
-
-      <div class="kvd">
-        <div>Status</div><div>✅ Premium ativo</div>
-        <div>Redirecionamento</div><div>em até 3 segundos…</div>
+      <div class="status-line">
+        Redirecionamento: <span id="redirect-text">em instantes...</span>
       </div>
 
-      <div class="actions">
-        <button class="btn btn-primary" onclick="goNow()">Ir para o app agora</button>
-        <a class="btn btn-outline" href="/" onclick="goNow(); return false;">Voltar para a página inicial</a>
+      <div class="buttons">
+        <button id="go-to-app" class="btn-primary">Ir para o app agora</button>
+        <button
+          type="button"
+          class="btn-ghost"
+          onclick="window.location.href='/'"
+        >
+          Voltar para a página inicial
+        </button>
       </div>
 
-      <p class="note">Se não for redirecionado automaticamente, clique em “Ir para o app agora”.</p>
+      <p class="small">
+        Se você não for redirecionado automaticamente, clique em
+        <strong>“Ir para o app agora”</strong>.
+      </p>
     </main>
   </body>
 </html>
