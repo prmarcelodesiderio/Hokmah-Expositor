@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hokmah Expositor - Assistente IA para Pastores Reformados</title>
 
-    <!-- SEO + Social -->
     <link rel="canonical" href="https://gen-lang-client-0187133986.web.app/" />
     <meta name="description" content="Gere sermões e estudos com estrutura exegética, ênfase pastoral e citações reformadas. Free e Premium. Experimente grátis." />
     <meta property="og:title" content="Hokmah Expositor — Sermon &amp; Study AI" />
@@ -15,14 +14,11 @@
     <meta property="og:url" content="https://gen-lang-client-0187133986.web.app/" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Tailwind -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Element SDK (opcional para edição visual) -->
     <script src="/_sdk/element_sdk.js"></script>
 
-    <!-- Schema.org -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -95,9 +91,7 @@
   </head>
   <body class="bg-white">
 
-    <!-- ====== LANDING ====== -->
     <div id="landing" style="display: none;">
-      <!-- Header -->
       <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -112,29 +106,28 @@
             <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition-colors">Planos</a>
           </nav>
           <div class="flex items-center gap-3">
-            <a href="#" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Entrar</a>
-            <button type="button" onclick="startFree()" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Começar Gratuitamente</button>
+            <a href="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app/" class="text-sm text-gray-600 hover:text-gray-900 transition-colors" title="Acessar o Hokmah Expositor (assinantes)">Já sou assinante</a>
+            <a href="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app/" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Começar Gratuitamente</a>
           </div>
         </div>
       </header>
 
-      <!-- Hero -->
       <section class="relative bg-gray-900 text-white py-28 md:py-36 overflow-hidden">
         <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
           <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500 text-xs font-semibold uppercase tracking-wider mb-4">
             IA feita por pastores reformados, para pastores reformados
           </span>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            Menos tempo lutando com o esboço. <br />Mais tempo na Palavra e na oração.
+            <span class="whitespace-nowrap">Menos tempo lutando com o esboço.</span> <br />Mais tempo na Palavra e na oração.
           </h1>
           <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             O Hokmah Expositor é um assistente de IA que organiza suas ideias, sugere estruturas e aponta fontes reformadas de referência — sem substituir o seu estudo, sua oração e sua voz no púlpito.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 mb-3">
-            <button type="button" onclick="startFree()" data-analytics="hero_primary" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-colors">
+            <a href="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app/" data-analytics="hero_primary" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-colors">
               Começar Gratuitamente
               <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+            </a>
             <a href="#pricing" class="inline-flex items-center justify-center px-8 py-3 rounded-lg text-base font-medium border border-gray-500 bg-transparent hover:bg-gray-800 transition-colors">
               Ver planos e recursos
             </a>
@@ -144,7 +137,6 @@
         <div class="absolute inset-0 bg-grid-gray-700/10 opacity-50 mask-radial"></div>
       </section>
 
-      <!-- Features (abas) -->
       <section id="features" class="py-20 bg-gray-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
@@ -179,7 +171,6 @@
             </div>
 
             <div class="p-8">
-              <!-- Tab: Sermão -->
               <div id="sermon-content" class="tab-content">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -207,7 +198,6 @@
                 </div>
               </div>
 
-              <!-- Tab: Série -->
               <div id="series-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -238,7 +228,6 @@
                 </div>
               </div>
 
-              <!-- Tab: Estudo -->
               <div id="study-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -268,7 +257,6 @@
                 </div>
               </div>
 
-              <!-- Tab: Ocasiões -->
               <div id="special-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -278,7 +266,6 @@
                       <li><strong>Mensagens contextualizadas</strong> para batismos, casamentos, funerais e dedicações</li>
                       <li><strong>Calendário litúrgico</strong> com sermões para Natal, Páscoa, Pentecostes e Reforma</li>
                       <li><strong>Adaptação de audiência</strong> considerando visitantes e não-cristãos presentes</li>
-                      <li><strong>Elementos cerimoniais</strong> com liturgia e orientações práticas</li>
                       <li><strong>Sensibilidade pastoral</strong> para momentos delicados e celebrativos</li>
                     </ul>
                   </div>
@@ -299,7 +286,6 @@
                 </div>
               </div>
 
-              <!-- Tab: Refinar -->
               <div id="refine-content" class="tab-content hidden">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -329,12 +315,9 @@
                 </div>
               </div>
 
-            </div> <!-- /p-8 -->
-          </div> <!-- /card -->
-        </div>
+            </div> </div> </div>
       </section>
 
-      <!-- Autoridade Reformada -->
       <section id="authority" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
@@ -376,11 +359,17 @@
                 <blockquote class="text-gray-700 italic mb-4">
                   "A pregação não é sobre eloquência humana, mas sobre a fidelidade à Palavra de Deus. O Hokmah Expositor nos ajuda a ser mais fiéis ao texto e mais claros na comunicação."
                 </blockquote>
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+                <div class="flex items-center gap-4 mt-4">
+                  <img
+                    src="marcelo-desiderio.jpg"
+                    alt="Foto do Rev. Marcelo Desiderio"
+                    class="w-12 h-12 rounded-full object-cover border border-gray-200 shadow-sm"
+                  />
                   <div>
-                    <div class="font-semibold text-gray-900">Rev. Marcelo Desiderio</div>
-                    <div class="text-sm text-gray-600">Pastor, Quinta Igreja Presbiteriana de Montes Claros</div>
+                    <p class="font-semibold">Rev. Marcelo Desiderio</p>
+                    <p class="text-sm text-gray-500">
+                      Pastor, Quinta Igreja Presbiteriana de Montes Claros
+                    </p>
                   </div>
                 </div>
               </div>
@@ -390,7 +379,6 @@
         </div>
       </section>
 
-      <!-- Pricing -->
       <section id="pricing" class="py-20 bg-gray-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
@@ -399,7 +387,6 @@
           </div>
 
           <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Free -->
             <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <div class="text-center mb-8">
                 <h3 class="text-2xl font-bold text-gray-900 mb-2">Gratuito</h3>
@@ -407,18 +394,17 @@
                 <p class="text-gray-600">Para começar</p>
               </div>
               <ul class="space-y-4 mb-8">
-                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Pré-visualização + estruturas básicas</span></li>
+                <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Acesso a todos os modos (sermão, refinamento, série, estudo, ocasiões especiais) com até <strong>2 gerações por serviço</strong>.</span></li>
                 <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Suporte por e-mail</span></li>
               </ul>
-              <button type="button" id="free-submit" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium border border-gray-300 text-gray-700 bg-white transition-colors" disabled title="Em breve">
-                Gerador Free indisponível no momento
-              </button>
+              <p class="mt-4 text-xs text-gray-500 text-center">
+                No plano gratuito você pode testar todos os recursos com até <strong>2 gerações por serviço</strong>.
+              </p>
             </div>
 
-            <!-- Premium -->
             <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-500 relative">
               <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Mais Popular</span>
+                <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Preço de lançamento</span>
               </div>
               <div class="text-center mb-8">
                 <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
@@ -432,8 +418,8 @@
                 <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Referências cruzadas + termo grego/hebraico (opcional)</span></li>
                 <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-700">Exportações: PDF, DOCX e Markdown</span></li>
               </ul>
-              <form id="upgrade-form" action="https://create-checkout-session-467345148998.europe-west1.run.app/create-checkout-session" method="POST">
-                <button id="upgrade-btn" type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">Assinar Premium</button>
+              <form id="upgrade-form">
+                <a href="https://hokmah-expositor-gerador-de-esbo-os-de-serm-o-467345148998.us-west1.run.app/" id="upgrade-btn" class="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors text-center decoration-0">Começar gratuitamente no app</a>
               </form>
               <p class="text-xs text-gray-500 mt-3">Algumas versões bíblicas exigem licença. Oferecemos alternativas de domínio público/licenciadas.</p>
             </div>
@@ -441,11 +427,6 @@
         </div>
       </section>
 
-      <!-- (Newsletter ocultada)
-      <section id="signup" class="py-16 bg-white border-t border-gray-200"> ... </section>
-      -->
-
-      <!-- FAQ -->
       <section class="py-16 bg-gray-50">
         <div class="max-w-4xl mx-auto px-4">
           <h3 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">Perguntas Frequentes</h3>
@@ -460,7 +441,12 @@
             </details>
             <details class="py-4">
               <summary class="font-semibold text-gray-900 cursor-pointer">Qual o limite do plano Free?</summary>
-              <p class="mt-2 text-gray-600">Pré-visualização e estruturas básicas. O gerador completo está no Premium.</p>
+              <p class="mt-2 text-gray-600">
+                No plano Free você pode usar todos os recursos (sermão, refinamento,
+                série, estudo bíblico e ocasiões especiais) com até <strong>2 gerações
+                por serviço</strong>. A partir daí, é só assinar o Premium para gerar
+                de forma ilimitada.
+              </p>
             </details>
             <details class="py-4">
               <summary class="font-semibold text-gray-900 cursor-pointer">Posso cancelar quando quiser?</summary>
@@ -470,51 +456,33 @@
         </div>
       </section>
 
-      <!-- Footer -->
-      <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid md:grid-cols-4 gap-8">
-            <div>
-              <div class="flex items-center gap-2 mb-4">
-                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                <span class="font-semibold">Hokmah Expositor</span>
-              </div>
-              <p class="text-gray-400 text-sm">Assistente de IA para pastores reformados, desenvolvido com amor pela Igreja de Cristo.</p>
-            </div>
-            <div>
-              <h4 class="font-semibold mb-4">Produto</h4>
-              <ul class="space-y-2 text-sm text-gray-400">
-                <li><a href="#features" class="hover:text-white transition-colors">Recursos</a></li>
-                <li><a href="#pricing" class="hover:text-white transition-colors">Preços</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">API</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="font-semibold mb-4">Suporte</h4>
-              <ul class="space-y-2 text-sm text-gray-400">
-                <li><a href="#" class="hover:text-white transition-colors">Documentação</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">Tutoriais</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">Contato</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="font-semibold mb-4">Empresa</h4>
-              <ul class="space-y-2 text-sm text-gray-400">
-                <li><a href="#" class="hover:text-white transition-colors">Sobre</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                <!-- <li><a href="/privacidade" class="hover:text-white transition-colors">Privacidade</a></li> -->
-              </ul>
-            </div>
+      <footer class="bg-slate-950 border-t border-slate-900">
+        <div class="max-w-5xl mx-auto px-4 py-8 space-y-4 text-sm text-slate-400">
+          <div>
+            <p class="font-semibold text-slate-100">Hokmah Expositor</p>
+            <p class="mt-2">
+              “Hokmah” é a palavra hebraica para <strong>sabedoria prática</strong> —
+              aplicar o temor do Senhor nas decisões do dia a dia. O Hokmah Expositor
+              nasceu para servir pastores que pregam essa sabedoria, não para substituí-los.
+            </p>
           </div>
-          <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>© 2024 Hokmah Expositor. Todos os direitos reservados.</p>
+
+          <div>
+            <p>
+              Aqui, a <strong>IA é apenas uma ferramenta</strong>: ela organiza ideias,
+              sugere estruturas e poupa tempo, mas não substitui Bíblia aberta, oração,
+              estudo sério e cuidado pastoral. A tecnologia já faz parte da nossa rotina;
+              a questão não é se vamos usá-la, mas <strong>como usá-la a serviço do
+              ministério</strong>.
+            </p>
           </div>
+
+          <p class="pt-2 text-xs text-slate-500">
+            © 2024 Hokmah Expositor. Desenvolvido por pastores reformados para servir a Igreja de Cristo.
+          </p>
         </div>
       </footer>
-    </div> <!-- /landing -->
-
-    <!-- ====== APP HEADER (quando sair da landing) ====== -->
-    <header class="app-header" id="app-header" style="display:none;">
+    </div> <header class="app-header" id="app-header" style="display:none;">
       <h1>Hokmah Expositor</h1>
       <div class="header-right">
         <div id="plan-label" class="plan-badge">Plano: Free</div>
@@ -524,9 +492,7 @@
       </div>
     </header>
 
-    <!-- ====== APP CONTAINER ====== -->
     <div id="app-container" style="display:none;">
-      <!-- Free (desabilitado) -->
       <section id="app-free" class="app-section" style="display:block;">
         <h2>Gerador de Esboços – Plano Free</h2>
         <p>O gerador Free online está temporariamente desativado. Use o Laboratório Premium abaixo para acesso completo.</p>
@@ -573,7 +539,6 @@
         <pre id="free-result" class="outline-result"></pre>
       </section>
 
-      <!-- Premium -->
       <section id="app-premium" class="app-section">
         <h2>Laboratório de Sermões – Plano Premium</h2>
         <p>Geração <strong>ilimitada</strong> de esboços e estudos bíblicos, usando o motor do Hokmah Expositor integrado ao Gemini.</p>
@@ -587,7 +552,6 @@
       </section>
     </div>
 
-    <!-- Mensagem extra -->
     <div class="page" id="app-page-extra" style="display:none;">
       <div class="card">
         <h2>Conteúdo grátis visível para todos.</h2>
@@ -600,7 +564,6 @@
       </div>
     </div>
 
-    <!-- ====== SCRIPTS ====== -->
     <script>
       // Tabs e rolagem suave
       document.addEventListener("DOMContentLoaded", function () {
@@ -808,7 +771,6 @@
       });
     </script>
 
-    <!-- Cloudflare (opcional/automático do host) -->
     <script>
       (function () {
         function c() {
