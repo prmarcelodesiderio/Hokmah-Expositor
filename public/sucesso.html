@@ -95,14 +95,14 @@
           )} segundos...`;
         }, 1000);
 
-        // redirecionamento automático
+        // redirecionamento automático com o parâmetro PREMIUM
         setTimeout(() => {
-          window.location.href = APP_URL;
+          window.location.href = APP_URL + '?plan=premium';
         }, 3000);
 
-        // botão "Ir para o app agora"
+        // botão "Ir para o app agora" também com parâmetro PREMIUM
         btn.addEventListener("click", () => {
-          window.location.href = APP_URL;
+          window.location.href = APP_URL + '?plan=premium';
         });
       });
     </script>
